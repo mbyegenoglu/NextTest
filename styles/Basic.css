@@ -1,0 +1,245 @@
+.row{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-10px;margin-left:-10px}
+.px{position:relative;min-height:1px;padding-right:10px;padding-left:10px;float:left}
+.py{position:relative;min-height:1px;padding-top:10px;padding-bottom:10px}
+article,aside,dialog,figcaption,figure,footer,header,hgroup,main,nav,section{display:block;float: left;width: 100%;}
+.fl{float:left}
+.fr{float:right}
+.fn{float:none}
+#root {
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.container-fluid{margin:0 auto;width: 100%; padding:0 25px}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    width: 5px;
+    height: 5px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #9f1b16; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+@media screen and (min-width: 1201px) {
+    .container{max-width:1200px;margin:0 auto;width: 100%;}
+}
+@media screen and (max-width: 1200px) {
+    .container{float:left;width:100%}
+}
+
+img{max-width:100%;height:auto}
+.image-wrapper{position:relative;width:100%;overflow:hidden;padding-bottom:150%}
+.imgInner{position:absolute;width:100%;height:100%;top:0;left:0;text-align:center;display:flex;align-items:center}
+.image-wrapper img{width: 100%;max-height:100%;margin:0 auto;border: 1px solid #e9e9e9;box-sizing: border-box;transition: all .4s;}
+
+
+.swiper-button-next,.swiper-button-prev {
+    color: #333333 !important;
+    opacity: .5;
+    transition: all .5;
+}
+
+.swiper-button-next:hover, .swiper-button-prev:hover {
+    opacity: 1;
+}
+
+
+input[type="text"],input[type="email"],input[type="password"], select,textarea {
+    border: 1px solid #e5e4e9;
+    background-color: #ffffff;
+    color: #333;
+    background-clip: padding-box;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    height: 56px;
+    padding: 8px 16px;
+    outline: none;
+    transition: padding 0.1s, border-color 0.5s, box-shadow 0.5s;
+    box-shadow: 0 0 0 1px transparent;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    font-weight: 500;
+    color: #000;
+    resize: none;
+}
+textarea{
+    height: auto;
+}
+label {
+    color: #8a8b94;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    user-select: none;
+    pointer-events: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: transform 0.1s;
+    transform: translateY(18px);
+    font-size: 13px;
+    max-width: calc(100% - 20px);
+    left: 10px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px 0 20px;
+    color: #000;
+    top: calc(50% - 30px);
+    font-weight: 500;
+}
+
+select{
+    background: url('../Img/Icons/down-arrow.svg') right 15px center no-repeat;
+}
+select:focus {
+    border: solid 1px black;
+}
+.ReactModalPortal {z-index: 999999999999;position: fixed;}
+.ReactModalPortal * {outline: none;}
+.modalOverlay {
+    height: 100%;
+    width: 100%;
+    background: #00000091;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+padding: 100px 0;}
+
+.modalOverlay.Top{
+    align-items: flex-start;
+}
+
+.modalOverlay .Modal {
+    max-width: 500px;
+    width: 100%;
+    border-radius: 6px;
+    background: #fff;
+    overflow: hidden;
+}
+.Modal .modalFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px 20px;
+    border-top: solid 1px #ccc6;
+    margin-top: 20px;
+}
+
+.Modal .modalFooter button {
+    background: #6e6e6e;
+    color: #fff;
+    font-weight: 500;
+    font-size: 13px;
+    width: 45%;
+    height: 50px;
+}
+
+.Modal .modalFooter .btn.btn-pri {
+    background: #000;
+}
+
+.Modal .modalTitle {
+    background: white;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    position: relative;
+    border-bottom: solid 1px #ccc6;
+    margin-bottom: 20px;
+}
+
+.modalOverlay .Modal .modalBody {
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.Modal .modalTitle button {
+    background: #cccccc5c;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    cursor: pointer;
+} 
+
+
+.modalOverlay .Modal .modalBody .form-group {
+    padding: 10px 10px;
+    position: relative;
+}
+
+
+
+
+.alert{
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+.alert-info{
+    background-color: #ebeff4;
+    color: #344256;
+}
+
+
+
+
+
+
+
+
+
+
+
+ul.errList {padding: 0 10px;}
+ul.errList li {background: red;min-height: 25px;display: flex;align-items: center;padding: 0 10px;margin-bottom: 5px;color: #fff;}
+
+.errList.passive {display: none;}
+
+
+#BannerList > .container-fluid{
+    padding: 0 10px;
+}
+
+
+#BannerList a, #BannerList img, #Carousel a, #Carousel img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}

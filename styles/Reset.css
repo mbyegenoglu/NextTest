@@ -1,0 +1,24 @@
+*{
+    box-sizing: border-box;
+}
+html, body, ul
+{margin:    0;padding: 0;border:    0;vertical-align:    baseline;}
+body, tfoot, thead, tr, th, td
+{margin:    0;padding: 0;vertical-align:    baseline;}
+html, body
+{
+float:   left;
+width:100%;
+text-size-adjust:100%;
+-webkit-text-size-adjust:100%;
+z-index: 1;
+}
+ul, ol{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}

@@ -1,0 +1,49 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+.errorBoxParent {
+    position: absolute;
+    bottom: 5%;
+    left: 2.5%;
+    background-color: #ff0033;
+    border-radius: 10px;
+    color: white;
+    max-width: 500px;
+    word-break: break-all;
+
+}
+
+.errorBox {
+    position: relative;
+    width: 100%;
+    font-size: 16px;
+    height: 100%;
+    padding: 15px 25px;
+    font-family: -webkit-pictograph;
+
+}
+
+.navigation {
+    position: absolute;
+    top: -15%;
+    right: 5%;
+    background-color: gray;
+    display: flex;
+    width: 60px;
+    height: 30px;
+    background-color: white;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 1px 2px #ff0033;
+    justify-content: space-around;
+}
+
+.navigation i {
+    color: #ff0033;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.disabledNav {
+    opacity: 0.5;
+    cursor: no-drop!important;
+}

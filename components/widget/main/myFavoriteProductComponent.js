@@ -8,7 +8,7 @@ import { getParam } from '../../../redux/slices/paramSlice';
 import ProductBox from './Product/productBox'
 import ProductTop from './Product/productTop';
 
-export default function myFavoriteProductComponent() {
+export default function MyFavoriteProductComponent() {
   const param = useSelector(getParam);
   const dictionary = useSelector(getDictionary);
   const [productItems, setProductItems] = useState([]);

@@ -5,8 +5,8 @@ import { getDictionary } from '../../../../redux/slices/dictionarySlice';
 
 import Dictionary from '../../../../lib/dictionary';
 
-import {AiFillCaretDown,AiOutlineCheck} from "react-icons";
-
+import {BiChevronDown} from "react-icons/bi";
+import {AiOutlineCheck} from "react-icons/ai";
 export default function Filter({items, filterValues, setFilterValues}) {
 
     const [filters, setFilters] = useState(items.map(e => {
@@ -46,7 +46,11 @@ export default function Filter({items, filterValues, setFilterValues}) {
             {filters?.map((Filter, i) =>
             {
                 return <div className={"fl col-12 filterWrap"} key={Filter.refId}>
-                    <div className={"fl col-12 FilterTitle " + (Filter.isOpened ? 'active' : 'passive')} onClick={(e) => ToggleFilter(Filter)}>{Filter.name} </div>
+                    <div className={"fl col-12 FilterTitle " + (Filter.isOpened ? 'active' : 'passive')} onClick={(e) => ToggleFilter(Filter)}>
+                        
+                        {Filter.name} 
+                        <BiChevronDown></BiChevronDown>
+                    </div>
                     <div className="fl col-12 filterWrapper">
                         <ul className="fl col-12 filterItemList">
                             {Filter.propertyValues?.map(FilterSub => 
@@ -91,7 +95,9 @@ export default function Filter({items, filterValues, setFilterValues}) {
                     <div className='px py col-6'>
                         <input placeholder={dictionary["Web.UI.PriceFilterMax"]} type={"text"} name="maxPrice"></input>
                     </div>
-                    <button id='applyPriceFilter'></button>
+                    <button id='applyPriceFilter'>
+                        <AiOutlineCheck></AiOutlineCheck>
+                    </button>
                 </div>
             </div>
         </div>

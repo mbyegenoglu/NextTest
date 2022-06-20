@@ -1,58 +1,49 @@
-var elastic = require("@elastic/elasticsearch");
-var fs = require('fs');
-
 export default async function handler(req, res) {
 
-    const client = new elastic.Client({
-        node: process.env.elastichost,
-        auth: {
-          username: process.env.elasticuser,
-          password: process.env.elasticpass
-        },
-        tls: {
-          ca: fs.readFileSync('./elastic_http_ca.crt'),
-          rejectUnauthorized: false
-        }
-      });
-
-      const query = {
-        index: "product",
-        from: 0,
-        size: process.env.elasticproductperpage,
-        query: {
+  const query = {
+      //index: "product",
+      from: 0,
+      size: process.env.elasticproductperpage,
+      query: {
           bool: {
-            must: []
+              must: []
           }
-        }
-      };
-      if (!!req.query.page) {
-        query.from = (parseInt(req.query.page)-1) * process.env.elasticproductperpage
       }
-      if (!!req.query.catid) {
-        query.query.bool.must.push({match: {"categories.refId": req.query.catid}});
+  };
+  if (!!req.query.page) {
+      query.from = (parseInt(req.query.page) - 1) * process.env.elasticproductperpage
+  }
+  if (!!req.query.catid) {
+      query.query.bool.must.push({ match: { "categories.refId": req.query.catid } });
+  }
+  if (!!req.query.values) {
+      const values = req.query.values.split(',');
+      for (let i in values) {
+          query.query.bool.must.push({ terms: { "variants.properties.valueId": values[i].split(":")[1].split("|") } });
       }
-      if (!!req.query.values) {
-        const values = req.query.values.split(',');
-        for(let i in values) {
-          query.query.bool.must.push({match: {"variants.properties.valueId": values[i]}});
-        }
-      }
-      if (!!req.query.sort) {
-        let sortby = req.query.sortby || "asc";
-        switch (req.query.sort) {
+  }
+  if (!!req.query.sort) {
+      let sortby = req.query.sortby || "asc";
+      switch (req.query.sort) {
           case "price":
-            query.sort = [{"variants.prices.salePrice": {"order": sortby}}]
-            break;
-        
+              query.sort = [{ "variants.prices.salePrice": { "order": sortby } }]
+              break;
+
           default:
-            break;
-        }
+              break;
       }
-      const result = await client.search(query);
-      var listing = result.hits.hits.map(_s => {
-        let e = _s._source;
-        let p = e.productType == 1 ? e.variants.reduce((a, e) => { e.prices.forEach(p => a.push(p)); return a; }, []).sort((a, b) => a - b)[0] : e.prices.sort((a, b) => a - b)[0];
-        return {
+  }
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  let elasresp = await fetch(process.env.elastichost + "/product/_search", {
+      method: "POST",
+      headers: { "content-type": "application/json", "Authorization": "Basic ZWxhc3RpYzpFVDRReElfSWJZWmRJSkdFaUNkcg==" },
+      body: JSON.stringify(query)
+  });
+  let result = await elasresp.json();
+  let listing = result.hits.hits.map(_s => {
+      let e = _s._source;
+      let p = e.productType == 1 ? e.variants.reduce((a, e) => { e.prices.forEach(p => a.push(p)); return a; }, []).sort((a, b) => a - b)[0] : e.prices.sort((a, b) => a - b)[0];
+      return {
           refId: e.refId,
           productType: e.productType,
           stockCode: e.stockCode,
@@ -71,6 +62,7 @@ export default async function handler(req, res) {
           defaultPrice: p.defaultPrice == null ? 0 : p.defaultPrice,
           salePrice: p.salePrice == null ? 0 : p.salePrice,
           price: p.price == null ? 0 : p.price,
+          priceListId: p.priceListId,
           moneySymbol: p.moneySymbol,
           supplier: p.supplier,
           seoUrl: e.url,
@@ -78,8 +70,41 @@ export default async function handler(req, res) {
           productLinks: [],
           variantProperties: [],
           discountId: null
-        };
-      });
-      res.status(200).json(listing);
+      };
+  });
+  var myHeaders = {};
+  myHeaders["Content-Type"] = "application/json";
+  myHeaders["uniqueid"] = req.headers.uniqueid;
+  myHeaders["locale"] = req.headers.locale;
+  myHeaders["ip"] = req.headers.ip;
+  myHeaders["money"] = req.headers.money;
+  myHeaders["language"] = req.headers.language;
+
+  var raw = JSON.stringify(listing.map(m => { return { ProductId: m.refId, PriceListId: m.priceListId, Price: m.salePrice } }));
+
+  var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+  };
+
+  let customheaders = req.headers;
+  customheaders["Content-Type"] = "application/json";
+  let campaignResponse = await fetch(process.env.serverurl + "/Campaign/CampaignByProducts", requestOptions);
+
+  let campaignData = await campaignResponse.json();
+  console.log(campaignData);
+
+  listing.map(l => {
+      let prices = campaignData.filter(c => c.productId == l.refId);
+      if (prices.length == 1) {
+          l.price = prices[0].price;
+          l.salePrice = prices[0].price;
+      }
+      return l;
+  });
+
+  res.status(200).json(listing);
+
 }
-  

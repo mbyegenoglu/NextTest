@@ -32,14 +32,23 @@ export default function ProductsComponent({ props, children, data }) {
             setProductItems([]);
             var Category = data.refId;
             var Page = page;
-            var LinkFilter = "&values=";
-            if(filterValues.length > 0){
-                LinkFilter = "&values=" + filterValues.join(',')
-            }
-            var Link = "/api/listing?catid=" + Category + LinkFilter+"&page="+Page+"&sort=price&sortby=desc";
+
+            const FilterLinkArray = data.properties.filter(m => m.propertyValues.filter(mm => filterValues.indexOf(mm.refId) >= 0).length > 0).reduce((a, v) => { a[v.slug] = v.propertyValues.filter(m => filterValues.indexOf(m.refId)>=0).map(k => k.refId); return a; }, {});
+
+            var result = Object.keys(FilterLinkArray).reduce((m,a) => {
+                m[a] = FilterLinkArray[a].join("|");
+                return m;
+            },{});
+
+            result = Object.keys(result).reduce((n,b)=> {
+                n.push(b + ":" + result[b]);
+                return n;
+            },[]).join(",");
+
+            var Link = "/api/listing?catid=" + Category +"&values="+ result+"&page="+Page+"&sort=price&sortby=desc";
             setFilterUrl(Link);
             console.log(Link);
-
+            
     }, [filterValues]);
 
 

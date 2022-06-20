@@ -10,13 +10,16 @@ import {AiOutlineClose} from "react-icons/ai";
 
 export default function FilterHistory({ items, filterValues, setFilterValues }) {
 	const dictionary = useSelector(getDictionary);
+
 	const filters = items.reduce((p, c) => {
 		c.propertyValues.map(j => p.push(j));
 		return p;
-	}, []);
+	}, [filterValues]);
+
 
 	function removeInFilter(e) {
-		setFilterValues(filterValues.filter(m => m != e));
+		filterValues.splice(filterValues.indexOf(e.refId),1);
+		setFilterValues(filterValues);
 	}
 	
 	return (

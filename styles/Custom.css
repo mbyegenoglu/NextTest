@@ -100,7 +100,7 @@ ul#filterHistory li:last-child a{font-weight:600;color:#333;font-size:11px;text-
   width: 20px;
 }
 .productItemInfo{font-weight:400;color:#666;font-size:12px;height:36px;line-height:18px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.productItemInfo span{font-weight:600}
+.productItemInfo span{font-weight:600;margin-right: 5px;}
 .productItem:hover .image-wrapper .imgSrc{transform:scale(1.1)}
 #Filter .filterWrap{margin-bottom:5px;cursor:pointer}
 #Filter .filterWrap .FilterTitle{height:40px;display:flex;align-items:center;justify-content:space-between;font-weight:600;font-size:13px;color:#333}

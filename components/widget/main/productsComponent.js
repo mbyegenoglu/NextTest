@@ -16,7 +16,14 @@ export default function ProductsComponent({ props, children, data }) {
     const dictionary = new Dictionary(useSelector(getDictionary));
     const [filterValues, setFilterValues] = useState([]);
     const [productItems, setProductItems] = useState([]);
-    const [filterUrl,setFilterUrl] = useState("/api/listing?catid="+ data.refId+"&page=1&sort=price&sortby=desc");
+    const [filterUrl, setFilterUrl] = useState(
+        {
+            catid: data.refId,
+            values: "",
+            page: 1,
+            sort: "price",
+            sortby: "desc"
+        });
 
     const [noMore, setNoMore] = useState(false);
     const [page, setPage] = useState(1);
@@ -27,50 +34,57 @@ export default function ProductsComponent({ props, children, data }) {
     });
 
 
-    useEffect(()=>{
-            setPage(1);
-            setProductItems([]);
-            var Category = data.refId;
-            var Page = page;
+    useEffect(() => {
+        setProductItems([]);
+        var Category = data.refId;
 
-            const FilterLinkArray = data.properties.filter(m => m.propertyValues.filter(mm => filterValues.indexOf(mm.refId) >= 0).length > 0).reduce((a, v) => { a[v.slug] = v.propertyValues.filter(m => filterValues.indexOf(m.refId)>=0).map(k => k.refId); return a; }, {});
+        const FilterLinkArray = data.properties.filter(m => m.propertyValues.filter(mm => filterValues.indexOf(mm.refId) >= 0).length > 0).reduce((a, v) => { a[v.slug] = v.propertyValues.filter(m => filterValues.indexOf(m.refId) >= 0).map(k => k.refId); return a; }, {});
 
-            var result = Object.keys(FilterLinkArray).reduce((m,a) => {
-                m[a] = FilterLinkArray[a].join("|");
-                return m;
-            },{});
+        var result = Object.keys(FilterLinkArray).reduce((m, a) => {
+            m[a] = FilterLinkArray[a].join("|");
+            return m;
+        }, {});
 
-            result = Object.keys(result).reduce((n,b)=> {
-                n.push(b + ":" + result[b]);
-                return n;
-            },[]).join(",");
-
-            var Link = "/api/listing?catid=" + Category +"&values="+ result+"&page="+Page+"&sort=price&sortby=desc";
-            setFilterUrl(Link);
-            console.log(Link);
-            
+        result = Object.keys(result).reduce((n, b) => {
+            n.push(b + ":" + result[b]);
+            return n;
+        }, []).join(",");
+        
+        var linkbuild = Object.assign({}, filterUrl);
+        linkbuild.catid = Category;
+        linkbuild.values = result;
+        linkbuild.page = 1;
+        
+        if (filterUrl != linkbuild) {
+            setFilterUrl(linkbuild);
+            setNoMore(false);
+        }
     }, [filterValues]);
 
 
-    useEffect( async ()=>{
-            const res = await fetch(filterUrl, requestOptions);
-            const Data = await res.json();
-            setProductItems(Data);
+    useEffect(async () => {
+        const res = await fetch("/api/listing?" + Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), requestOptions);
+        const Data = await res.json();
+        setProductItems(Data);
     }, [filterUrl]);
 
     const fetchProduct = async () => {
-        const res = await fetch(filterUrl , requestOptions);
+        if (noMore) return;
+        filterUrl.page += 1;
+        const res = await fetch("/api/listing?" + Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), requestOptions);
         const Data = await res.json();
         return Data;
     };
 
     const fetchData = async () => {
+        let p = page;
+        setPage(p + 1);
         const fetchNowProducts = await fetchProduct();
         setProductItems([...productItems, ...fetchNowProducts]);
-        if(fetchNowProducts.length === 0 || fetchNowProducts.length < 20){
+        if (fetchNowProducts.length < 20) {
             setNoMore(true);
         }
-        setPage(page+1);
+        
     };
 
 
@@ -89,7 +103,7 @@ export default function ProductsComponent({ props, children, data }) {
         body: raw,
         redirect: 'follow'
     };
-    
+
 
 
     return (
@@ -100,9 +114,9 @@ export default function ProductsComponent({ props, children, data }) {
                     <div className="container-fluid">
 
                         <Filter items={data.properties} filterValues={filterValues} setFilterValues={setFilterValues} ></Filter>
-                        
+
                         <div className="px py col-10 col-md-12" id="mainSide">
-                            
+
                             <ListSubCat Stories={data.subcats}></ListSubCat>
                             <FilterHistory items={data.properties} filterValues={filterValues} setFilterValues={setFilterValues}></FilterHistory>
                             <InfiniteScroll
@@ -110,14 +124,14 @@ export default function ProductsComponent({ props, children, data }) {
                                 id="Katalog"
                                 dataLength={productItems.length}
                                 next={fetchData}
-                                hasMore={true}
+                                hasMore={!noMore}
                                 loader={<div className='fl col-12 ListBottomHr'><span></span></div>}
                                 endMessage={
-                                    <p style={{ textAlign: 'center' }}>
+                                    <p className="fl col-12" id="NoMoreProduct" style={{ textAlign: 'center' }}>
                                         <b>{dictionary["@Web.UI.YouSawAllProduct"] == null ? "@Web.UI.YouSawAllProduct" : dictionary.dictionary["@Web.UI.YouSawAllProduct"]}</b>
                                     </p>
                                 }>
-                                {productItems.map((e, i) =>{
+                                {productItems.map((e, i) => {
                                     return <ProductBox item={e} key={i} param={param} dictionary={dictionary}></ProductBox>
                                 })}
                             </InfiniteScroll>
@@ -128,8 +142,3 @@ export default function ProductsComponent({ props, children, data }) {
         </Fragment>
     )
 }
-
-
-/*
-
-*/

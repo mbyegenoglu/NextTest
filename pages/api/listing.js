@@ -39,6 +39,7 @@ export default async function handler(req, res) {
       headers: { "content-type": "application/json", "Authorization": "Basic ZWxhc3RpYzpFVDRReElfSWJZWmRJSkdFaUNkcg==" },
       body: JSON.stringify(query)
   });
+  
   let result = await elasresp.json();
   let listing = result.hits.hits.map(_s => {
       let e = _s._source;
@@ -94,7 +95,6 @@ export default async function handler(req, res) {
   let campaignResponse = await fetch(process.env.serverurl + "/Campaign/CampaignByProducts", requestOptions);
 
   let campaignData = await campaignResponse.json();
-  console.log(campaignData);
 
   listing.map(l => {
       let prices = campaignData.filter(c => c.productId == l.refId);

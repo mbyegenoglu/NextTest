@@ -130,7 +130,7 @@ export default function ProductBox({ item, param, dictionary }) {
     }
 
 
-
+    console.log(pItem);
     
 
 
@@ -163,7 +163,7 @@ export default function ProductBox({ item, param, dictionary }) {
 
 
             <div className="fl col-12 productItemInfo">
-                <span className="name">{pItem?.stockCode}</span>
+                <span className="name">{pItem?.productBrandName}</span>
                 {pItem?.productName}
             </div>
         </div>

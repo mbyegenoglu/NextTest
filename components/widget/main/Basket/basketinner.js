@@ -44,6 +44,8 @@ export default function Basketinner() {
     }
     
 
+    console.log(basket);
+
     return (
         <div className="px py col-8 col-sm-12" id="cartWrapperLeft">
             <div className="fl col-12 Title">{dictionary["Web.UI.CartTitle"]} ({basket.length} {dictionary["Web.UI.CartProduct"]})</div>
@@ -55,7 +57,7 @@ export default function Basketinner() {
                             <div className="image-wrapper fl col-12">
                                 <span className="imgInner">
                                     <Image layout="fill" 
-                                        src={e.image == null ? param["noimage"] : e.image} 
+                                        src={"https://img.antremeta.com/"+e.stockCode+"_1.jpg"} 
                                         alt={e.name}
                                         >
                                     </Image>

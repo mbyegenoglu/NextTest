@@ -40,7 +40,7 @@ export default function ProductComponent({ data }) {
                 <div className="container">
                     <div id="productContent" className="fl col-12">
                         <div className="row">
-                            <ProductLeft images={data.images}> </ProductLeft>
+                            <ProductLeft images={data.images} stockCode={data.stockCode}> </ProductLeft>
                             <ProductRight data={data}></ProductRight>
                             <ProductAttr Attr={data}></ProductAttr>
                         </div>

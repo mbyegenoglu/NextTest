@@ -8,7 +8,8 @@ export default class ProductLeft extends Component {
             nav1: null,
             nav2: null,
             productImageList : props.images,
-            delegate : "[data-fancybox]"
+            delegate : "[data-fancybox]",
+            stockCode : props.stockCode
         };
     }
 
@@ -35,7 +36,7 @@ export default class ProductLeft extends Component {
                             {this.state.productImageList.map((s, index) => {
                                 return  <div className='fl col-12'  key={s}>
                                     <Image
-                                        src={"https://cdn.dsmcdn.com//ty30/product/media/images/20210320/16/73984938/155619649/1/1_org.jpg"} 
+                                        src={"https://img.antremeta.com/"+this.state.stockCode+"_"+(index+1)+".jpg"} 
                                         alt={index} 
                                         height={150} 
                                         width={100}>
@@ -51,9 +52,9 @@ export default class ProductLeft extends Component {
                         <Slider asNavFor={this.state.nav2}
                             ref={slider => (this.slider1 = slider)}>                   
                                 {this.state.productImageList.map((s, index) => {
-                                    return  <div className='fl col-12' key={s} data-fancybox="gallery" data-src={'https://cdn.dsmcdn.com/ty134/product/media/images/20210618/14/102146071/188127939/1/1_org_zoom.jpg'}>
+                                    return  <div className='fl col-12' key={s} data-fancybox="gallery" data-src={"https://img.antremeta.com/"+this.state.stockCode+"_"+index+".jpg"}>
                                         <Image
-                                            src={"https://cdn.dsmcdn.com/ty134/product/media/images/20210618/14/102146071/188127939/1/1_org_zoom.jpg"} 
+                                            src={"https://img.antremeta.com/"+this.state.stockCode+"_"+(index+1)+".jpg"} 
                                             alt={index} 
                                             height={750} 
                                             width={500}>

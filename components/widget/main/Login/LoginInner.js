@@ -10,7 +10,7 @@ import Dictionary from '../../../../lib/dictionary';
 
 export default function LoginInner({ authType }) {
 
-    
+
     const dictionary = useSelector(getDictionary);
     const param = new Dictionary(useSelector(getParam));
     const req = null; const res = null;
@@ -57,7 +57,14 @@ export default function LoginInner({ authType }) {
             else if (data.accessToken != null) {
                 setLoginError("");
                 cookiefactory.SetToken(data, req, res);
-                window.location.href = document.referrer;
+                var Link = window.location.hostname;
+                var oldLink = document.referrer;
+                if (oldLink.indexOf(Link) > -1) {
+                    window.location.href = oldLink;
+                }
+                else {
+                    window.location.href = "/";
+                }
             }
         }).catch(error => { setButtonLoading(false); setLoginError(error); });
 

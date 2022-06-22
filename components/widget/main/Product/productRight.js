@@ -98,8 +98,6 @@ export default function ProductRight({ data }) {
 
 
 
-
-
     return (
 
         <div className="px col-6 col-sm-12" id="prodctRight">
@@ -124,6 +122,7 @@ export default function ProductRight({ data }) {
                     <h1 id="productName" className="fl col-12">
                         {Product.productName}
                     </h1>
+                    <div id='productStockCode' className='fl col-12'>{Product.stockCode}</div>
                     <div className="fl col-12 productComment">
                         <AiFillStar></AiFillStar>
                         <AiFillStar></AiFillStar>

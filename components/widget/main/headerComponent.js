@@ -91,12 +91,6 @@ export default function Header({ data }) {
             <a>{dictionary["Web.UI.LogInText"]}</a>
           </Link>
         </li>
-
-        <li className="px py col-12">
-          <Link href={links["Register"]}>
-            <a>{dictionary["Web.UI.SignUpText"]}</a>
-          </Link>
-        </li>
       </ul>
     } else {
       return <ul className="fl col-12 noLoginList">

@@ -5,20 +5,38 @@ import { getDictionary } from '../../../../redux/slices/dictionarySlice';
 
 import Dictionary from '../../../../lib/dictionary';
 
-export default function Basketsummary({data}) {
+export default function Basketsummary({ data }) {
 
     const basket = useSelector(getBasket);
     const dictionary = useSelector(getDictionary);
 
-    console.log(data);
+    const [Discount, setDiscount] = useState(0);
+
+    
+
+    const currency = basket.reduce((a, v) => a = v.moneySymbol, "");
+    const SubTotal = basket.reduce((a, v) => a += v.total, 0).toFixed(2);
+    const NetTotal = basket.reduce((a, v) => a += v.netTotal, 0).toFixed(2);
+
+    console.log(SubTotal,NetTotal);
+
+
     return (
         <div className="px py col-4 col-sm-12" id="cartWrapperRight">
             <div className="px py col-12 CartDetail">
                 <div className="fl col-12 Title">{dictionary["Web.UI.CartOrderSummaryTitle"]}</div>
                 <div className="fl col-12 Content">
-                    <div className="fl col-12 CartDetailItem cart"><span>{dictionary["Web.UI.CartSubTotal"]}</span><b>{basket.reduce((a, v) => a += v.total, 0)} {basket.reduce((a, v) => a = v.moneySymbol, "")}</b></div>
-                    <div className="fl col-12 CartDetailItem vat"><span>{dictionary["Web.UI.CartVat"]}</span><b>{basket.reduce((a, v) => a += v.tax, 0)} {basket.reduce((a, v) => a = v.moneySymbol, "")}</b></div>
-                    <div className="fl col-12 CartDetailItem total"><span>{dictionary["Web.UI.CheckoutGenelToplam"]}</span><b>{basket.reduce((a, v) => a += v.netTotal, 0)} {basket.reduce((a, v) => a = v.moneySymbol, "")}</b></div>
+                    <div className="fl col-12 CartDetailItem cart"><span>{dictionary["Web.UI.CartSubTotal"]}</span><b>{SubTotal} {currency}</b></div>
+
+                    {Discount > 0 && (
+                        <div className="fl col-12 CartDetailItem discount">
+                            <span>{dictionary["Web.UI.CartDiscountTotal"] != undefined ? dictionary["Web.UI.CartDiscountTotal"]:"Web.UI.CartSubTotal"}</span>
+                            <b>{Discount} {currency}</b>
+                        </div>
+                    )}
+
+
+                    <div className="fl col-12 CartDetailItem total"><span>{dictionary["Web.UI.CheckoutGenelToplam"]}</span><b>{NetTotal} {currency}</b></div>
                 </div>
             </div>
 
@@ -32,7 +50,7 @@ export default function Basketsummary({data}) {
                 <div className="fl col-12 Content">
                     <div className="fl col-12 form-group">
                         <input type="text" name="discountCode" id="discountCode" placeholder={dictionary["Web.UI.CartDiscountCodeInput"]}></input>
-                            <button className="btn btn-primary-outline">{dictionary["Web.UI.CartDiscountCodeButton"]}</button>
+                        <button className="btn btn-primary-outline">{dictionary["Web.UI.CartDiscountCodeButton"]}</button>
                     </div>
                 </div>
             </div>

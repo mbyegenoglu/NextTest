@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { json } from 'body-parser';
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import Cookiefactory from '../../../../lib/cookiefactory';
@@ -56,7 +54,6 @@ export default function ProductBox({ item, param, dictionary }) {
     }
 
     const addToFav = (favProduct) => {
-        debugger;
         const req = null; const res = null;
         const cookiefactory = new Cookiefactory();
         const headerData = cookiefactory.GetCookies(req, res);
@@ -119,18 +116,17 @@ export default function ProductBox({ item, param, dictionary }) {
     }
 
     function changeThisColor(e) {
-        var id = "263813b0-6664-43bb-6272-08da29700801";
+        var id = e;
         fetch("https://gw.antremeta.com/Product/GetVariant?id=" + id, requestOptions)
         .then(response => response.text())
         .then(result => {
             setPItem(JSON.parse(result));
-            console.log(pItem);
         })
         .catch(error => console.log('error', error));
     }
 
 
-    console.log(pItem);
+    console.log(pItem?.productLinks);
     
 
 
@@ -148,10 +144,16 @@ export default function ProductBox({ item, param, dictionary }) {
 
             <div className='fl col-12 productOtherColor'>
                 <ul>
-                    <li onClick={(event) => changeThisColor("263813b0-6664-43bb-6272-08da29700801")} style={{ background: "url('https://dfcdn.defacto.com.tr/480/X4400AZ_22SM_NM28_04_03.jpg') center center no-repeat" }}></li>
-                    <li onClick={(event) => changeThisColor("263813b0-6664-43bb-6272-08da29700801")} style={{ background: "url('https://cdn.dsmcdn.com/ty162/product/media/images/20210823/16/121602451/231149200/1/1_org_zoom.jpg') center center no-repeat" }}></li>
-                    <li onClick={(event) => changeThisColor("263813b0-6664-43bb-6272-08da29700801")} style={{ background: "url('https://cdn.dsmcdn.com//ty383/product/media/images/20220403/5/81496781/433313782/1/1_org.jpg') center center no-repeat" }}></li>
-                    <li onClick={(event) => changeThisColor("263813b0-6664-43bb-6272-08da29700801")} style={{ background: "url('https://cdn.dsmcdn.com//ty149/product/media/images/20210716/17/111315218/141083926/1/1_org.jpg') center center no-repeat" }}></li>
+                {pItem?.productLinks.map((pL) =>
+                    <li onClick={(event) => changeThisColor(pL.refId)} key={pL.refId} className={pItem.refId == pL.refId ? "active":""}>
+                            {pL.propertyValues.value}
+                     </li>
+                )}
+
+
+
+                    
+                   
                 </ul>
             </div>
 

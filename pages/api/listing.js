@@ -68,7 +68,7 @@ export default async function handler(req, res) {
           supplier: p.supplier,
           seoUrl: e.url,
           images: e.medias.map(m => m.path),
-          productLinks: [],
+          productLinks: e.linkeds,
           variantProperties: [],
           discountId: null
       };

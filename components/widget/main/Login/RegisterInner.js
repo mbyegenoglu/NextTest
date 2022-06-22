@@ -65,6 +65,7 @@ export default function RegisterInner({ authType }) {
                 if (result.status) {
                     setregisterError([]);
                     alert("Başarıyla Kayıt Oldunuz");
+                    window.location.reload();
                 } else {
                     setregisterError(result.errors);
                 }

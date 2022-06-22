@@ -68,6 +68,8 @@ export default function Header({ data }) {
     console.log(m);
   }
 
+  console.log(links);
+
 
 
   const getMenuList = function () {

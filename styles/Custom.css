@@ -150,7 +150,22 @@ h1#productName{font-weight:500;margin:0}
 #productComment #productCommentList .CommentItem .Date {font-size: 12px;color: #999;font-weight: 500;}
 #prodctRight .Price{display:flex;align-items: flex-start;justify-content:flex-start;padding-bottom:10px;margin-bottom:10px;border-bottom:solid 1px #f1f1f1;position: relative;}
 #prodctRight .Price > div{margin-right:20px;}
-#prodctRight .Price .productDiscount{display:flex;align-items:center;color:#f3f3f3;font-size:14px;font-weight:700;background: #ff4200!important;padding:0 10px;margin-top: 10px;border-radius: 4px;position: absolute;right: 20px;bottom: 14px;}
+#prodctRight .Price .productDiscount{
+  display: flex;
+  align-items: center;
+  color: #f3f3f3;
+  font-size: 14px;
+  font-weight: 700;
+  background: #ff4200!important;
+  padding: 0 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 10px;
+  width: 70px;
+  text-align: center;
+  justify-content: center;
+}
 #prodctRight .Price .oldPrice{font-weight:700;line-height:1.5;letter-spacing:.5px;font-size: 18px;color:#666;text-decoration:line-through;margin-top: 5px;height: 20px;display: flex;align-items: center;}
 #prodctRight .Price .currentPrice{color: #000000;font-weight:700;line-height: 1;letter-spacing:.5px;font-size: 50px;}
 #prodctRight .Price .currentPrice code {font-size: 23px;margin-right: 10px;}
@@ -259,11 +274,11 @@ a.AddToWp {background: #25d366;width: calc(50% - 30px);height: 50px;display: fle
 #productThumbs button.slick-arrow {width: 100%;border: none;height: 30px;font-size: 0;outline: none;cursor: pointer;z-index: 3;}
 #productThumbs button.slick-arrow.slick-prev{background: #f3f3f3 url('../Img/Icons/up-arrow-svgrepo-com.svg') center center no-repeat;background-size: 30px;}
 #productThumbs button.slick-arrow.slick-next{transform:rotate(180deg) ;background: #f3f3f3 url('../Img/Icons/up-arrow-svgrepo-com.svg') center center no-repeat;background-size: 30px;}
-#productImages button.slick-arrow {background: red;height: 50px;width: 50px;font-size: 0;border: none;outline: none;position: absolute;z-index: 3;top: calc(50% - 25px);cursor: pointer;/* box-shadow: 0px 0px 20px 0px #0000000f; */}
+#productImages button.slick-arrow {background: #fff;height: 50px;width: 50px;font-size: 0;border: none;outline: none;position: absolute;z-index: 3;top: calc(50% - 25px);cursor: pointer;/* box-shadow: 0px 0px 20px 0px #0000000f; */}
 #productImages button.slick-arrow.slick-prev {left: 0; background: center center no-repeat;background-size: 40px;}
 #productImages button.slick-arrow.slick-next {right: 0; background: center center no-repeat;background-size: 40px;}
 #productThumbs .slick-slide {opacity: 1;cursor: pointer;border: 1px solid #f3f3f3;box-sizing: border-box;}
-#productThumbs .slick-slide.slick-active.slick-current {border: 1px solid #333333;overflow: hidden;}
+#productThumbs .slick-slide.slick-active.slick-current {border: 1px solid #333333;overflow: hidden;background-color: #000;}
 
 #AddressList{border:solid 1px #e2e2e2;border-radius:6px;display:flex;background: #fff;}
 #AddressList .AddressItem{border:solid 1px #e2e2e2;border-radius:3px;display:flex;flex-direction:column;position:relative;padding-bottom:40px}
@@ -336,9 +351,9 @@ ul#NotifSelectList li.active::after{background:red}
 #cartWrapperLeft .CartItemList .CartItem .CartItemPriceQty .Qty{display:flex;align-items:center;border:solid 1px #e6e6e6}
 #cartWrapperLeft .CartItemList .CartItem .CartItemPriceQty .Qty input[type="text"],#cartWrapperLeft .CartItemList .CartItem .CartItemPriceQty .Qty input[type="button"]{width:33.33%;border-radius:0!important;outline:none;border:none;height:35px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0}
 #cartWrapperLeft .CartItemList .CartItem .PriceBpx{text-align:center}
-#cartWrapperLeft .CartItemList .CartItem .PriceBpx .oldPrice{font-weight:500;color:#333;font-size:11px;text-decoration:line-through}
-#cartWrapperLeft .CartItemList .CartItem .PriceBpx .nowPrice{font-weight:700;color:#333;font-size:14px}
-#cartWrapperLeft .CartItemList .CartItem .PriceBpx .oldPrice + .nowPrice{color:#ff1829}
+#cartWrapperLeft .CartItemList .CartItem .PriceBpx .oldPrice{font-weight:600;color:#333;font-size:13px;text-decoration:line-through}
+#cartWrapperLeft .CartItemList .CartItem .PriceBpx .nowPrice{font-weight:700;color:#333;font-size:16px}
+#cartWrapperLeft .CartItemList .CartItem .PriceBpx .oldPrice + .nowPrice{color:#b0201d}
 #cartWrapperLeft .CartItemList .CartItem .CartItemPriceQty .Qty input[type="button"]{font-size:22px}
 #CheckoutWrapper{background:red;height:100vh;overflow:hidden}
 #CheckoutWrapper #CheckoutRight{overflow-y:auto;height:100vh;background:#f7f7f9;display:flex;justify-content:flex-start;padding:40px 0 80px;position:relative;align-items:center}
@@ -436,12 +451,17 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 .InfoInner .btn-primary{background:#fff;width:100%;margin-top:20px;border:solid 1px #b31d19;height:50px;font-weight:600;color:#b31d19}
 .InfoInner{border-radius:6px;border:solid 1px #e2e2e2;background-color:#fff;/* box-shadow:0 1px 4px 0 #000; */padding:20px;box-sizing:border-box;display:flex;flex-wrap:wrap;justify-content:space-between}
 .InfoInner .btn-primary:hover{background:#b31d19;color:#fff}
+
 #Katalog{padding:0}
 #Katalog > .row{margin:0 -5px}
 #Katalog .productItem{padding:5px}
+
 .productOtherColor{padding:2.5px 0}
-.productOtherColor ul{display:flex}
-.productOtherColor ul li{width:20px;height:20px;border-radius:100%;background:red;margin-right:5px;cursor:pointer}
+.productOtherColor ul{display: block;white-space: nowrap;overflow-x: hidden;width: calc(100% - 40px);height: 21px;overflow-y: hidden;}
+.productOtherColor ul li{width:20px;height:20px;border-radius:100%;background:#e8e9e9;margin-right:5px;cursor:pointer;border: solid 1px transparent;float: none; display: inline-block;}
+.productOtherColor ul li.active{border: solid 1px #000;position: relative;}
+.productOtherColor ul li.active::after {width: 4px;height: 5px;background: #000000;content: '';display: flex;position: absolute;bottom: -2.5px;left: calc(50% - 2px);border-radius: 40px;}
+
 .OrderDetailItem{border-radius:6px;border:solid 1px #e6e6e6;background-color:#fff;box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);position:relative;overflow:hidden;margin-bottom: 20px;}
 .OrderDetailItem .OrderDetailTop{height:74px;border-radius:6px 6px 0 0;border-bottom:solid 1px #e2e2e2;background-color:#fafafa;display:flex;align-items:center;padding:0 15px;box-sizing:border-box;justify-content:space-between}
 .OrderDetailItem .OrderDetailTop .orderDetailTopLeft{display:flex;align-items:center;justify-content:flex-start}
@@ -490,6 +510,7 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 #Filter .filterWrap .filterWrapper.priceSection button#applyPriceFilter {width: 40px;height: 40px;border: none;background: #000000;border-radius: 4px;color: #fff;font-size: 19px;}
 #Filter .filterWrap .filterWrapper.priceSection .px.py:nth-child(1) {padding-left: 0;}
 #Filter .filterWrap .filterWrapper.priceSection input[type="text"]{height:44px}
+
 .gridSystem{height:50px;width:50px;display:flex;align-items:center;justify-content:center;position:absolute;right:0;top:calc(50% - 25px)}
 .gridSystem.F .T{display:none}
 .gridSystem.F .F{display:flex}
@@ -508,14 +529,8 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 #MainPageCarousel button.slick-arrow.slick-prev {left: 0;border-radius: 0 4px 4px 0;background: #fff url('../Img/Icons/left-arrow-svgrepo-com.svg')  center center no-repeat;background-size: 25px;}
 #MainPageCarousel button.slick-arrow.slick-next {right: 0;border-radius: 4px 0 0 4px;background: #fff url('../Img/Icons/right-arrow-svgrepo-com.svg') center center no-repeat;background-size: 25px;}
 
-.productComment span {
-  margin-left: 5px;
-}
-
-.productComment svg {
-  color: #ffa900;
-}
-
+.productComment span {margin-left: 5px;}
+.productComment svg {color: #ffa900;}
 .AddToCart button.addToFav:not(.active):hover,
 .AddToCart button.addToFav.active {color: #e42421;}
 

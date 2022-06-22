@@ -12,35 +12,22 @@ import { getMenu } from '../../../redux/slices/menuSlice';
 import { getMoney } from '../../../redux/slices/moneySlice';
 import { getParam } from '../../../redux/slices/paramSlice';
 import { getLink } from '../../../redux/slices/linkSlice';
-
 import Cookies from 'universal-cookie';
 import Dictionary from '../../../lib/dictionary';
 import Cookiefactory from '../../../lib/cookiefactory';
-
 import Link from 'next/link';
 import Image from 'next/dist/client/image';
-
 import MobilemenuComponent from './mobilemenuComponent';
-
-
-
-
-
 import { AiOutlineShopping,AiOutlineHeart,AiOutlineUser,AiOutlinePhone,AiOutlineMenu,AiOutlineSearch } from "react-icons/ai";
-
-
 
 export default function Header({ data }) {
   const [Head, getHead] = useState([]);
-
   const [culturModalIsOpen, setCultureIsOpen] = React.useState(false);
   const [mobileMenuIsOpen, setMenuIsOpen] = React.useState(false);
-
   const cookiefactory = new Cookiefactory();
   const cookies = cookiefactory.GetCookies();
   const req = null; const res = null;
   const dispatch = useDispatch();
-
   const token = cookiefactory.GetToken(req, res);
   const dictionary = useSelector(getDictionary);
   const param = new Dictionary(useSelector(getParam));

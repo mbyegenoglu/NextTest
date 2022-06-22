@@ -14,13 +14,7 @@ import Link from 'next/link';
 import Image from 'next/dist/client/image';
 import Cookies from "universal-cookie";
 import mobileProductPrice from "./mobileProductPrice";
-
-
-
 import Dictionary from '../../../../lib/dictionary';
-
-
-
 import {
     AiFillStar,
     AiOutlineStar,
@@ -53,7 +47,23 @@ export default function ProductRight({ data }) {
 
         if (sVariant != null) {
             let cookiefactory = new Cookiefactory();
-            dispatch(setBasket({ basket: { productId: Product.refId, variantId: sVariant.refId, lineType: 0, price: sPrice.salePrice, originalPrice: sPrice.defaultPrice, amount: 1, total: sPrice.salePrice, taxRate: 18, tax: sPrice.salePrice * 18 / 100, netTotal: sPrice.salePrice, moneySymbol: sPrice.moneySymbol, brand: Product.brandName, name: Product.productName, deliveryTime: Product.deliveryTime, priceId: sPrice.priceId }, cookies: cookiefactory.GetCookies(), token: cookiefactory.GetToken() }));
+            dispatch(
+                setBasket({ basket: 
+                    {   productId: Product.refId, 
+                        variantId: sVariant.refId, 
+                        lineType: 0, 
+                        price: sPrice.salePrice, 
+                        originalPrice: sPrice.defaultPrice, 
+                        amount: 1, 
+                        total: sPrice.salePrice, 
+                        taxRate: 18, 
+                        tax: sPrice.salePrice * 18 / 100, 
+                        netTotal: sPrice.salePrice, 
+                        moneySymbol: sPrice.moneySymbol, 
+                        brand: Product.brandName, 
+                        name: Product.productName, 
+                        deliveryTime: Product.deliveryTime, 
+                        priceId: sPrice.priceId }, cookies: cookiefactory.GetCookies(), token: cookiefactory.GetToken() }));
 
             $(".AddToCart button.addToCart").css("background", "#2ecc71");
             $(".AddToCart button.addToCart").text("Sepete Eklendi.");
@@ -67,6 +77,8 @@ export default function ProductRight({ data }) {
             $(".addToCartNotification").addClass("active");
         }
     }
+
+
 
     const onMouseforBigColorImage = (e) => {
         $("#OtherColorWrap").addClass("active");
@@ -92,9 +104,6 @@ export default function ProductRight({ data }) {
     const addFavorite = function (e) {
         setcurrentFavoriteProductId(e);
     }
-
-
-
 
 
 

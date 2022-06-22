@@ -10,15 +10,11 @@ export default function Basketsummary({ data }) {
     const basket = useSelector(getBasket);
     const dictionary = useSelector(getDictionary);
 
-    const [Discount, setDiscount] = useState(0);
-
-    
 
     const currency = basket.reduce((a, v) => a = v.moneySymbol, "");
     const SubTotal = basket.reduce((a, v) => a += v.total, 0).toFixed(2);
     const NetTotal = basket.reduce((a, v) => a += v.netTotal, 0).toFixed(2);
 
-    console.log(SubTotal,NetTotal);
 
 
     return (
@@ -28,10 +24,10 @@ export default function Basketsummary({ data }) {
                 <div className="fl col-12 Content">
                     <div className="fl col-12 CartDetailItem cart"><span>{dictionary["Web.UI.CartSubTotal"]}</span><b>{SubTotal} {currency}</b></div>
 
-                    {Discount > 0 && (
+                    {(SubTotal-NetTotal) > 0 && (
                         <div className="fl col-12 CartDetailItem discount">
-                            <span>{dictionary["Web.UI.CartDiscountTotal"] != undefined ? dictionary["Web.UI.CartDiscountTotal"]:"Web.UI.CartSubTotal"}</span>
-                            <b>{Discount} {currency}</b>
+                            <span>{dictionary["Web.UI.CartDiscountTotal"] != undefined ? dictionary["Web.UI.CartDiscountTotal"]:"Web.UI.CartDiscountTotal"}</span>
+                            <b>- {(SubTotal-NetTotal).toFixed(2)} {currency}</b>
                         </div>
                     )}
 

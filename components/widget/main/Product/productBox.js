@@ -125,11 +125,6 @@ export default function ProductBox({ item, param, dictionary }) {
         .catch(error => console.log('error', error));
     }
 
-
-    console.log(pItem?.productLinks);
-    
-
-
     return (
         <div className={Grid}>
             <a href={pItem?.seoUrl == null ? "#" : "/" + pItem?.seoUrl} className='fl col-12'>
@@ -144,8 +139,12 @@ export default function ProductBox({ item, param, dictionary }) {
 
             <div className='fl col-12 productOtherColor'>
                 <ul>
-                {pItem?.productLinks.map((pL) =>
-                    <li onClick={(event) => changeThisColor(pL.refId)} key={pL.refId} className={pItem.refId == pL.refId ? "active":""}>
+                {pItem?.productLinks?.map((pL,i) =>
+                    <li onClick={(event) => changeThisColor(pL.refId)} 
+                        key={i+"pl"+pL.refId} 
+                        data-id={i+"pl"+pL.refId} 
+                        className={pItem.refId == pL.refId ? "active":""}
+                        >
                             {pL.propertyValues.value}
                      </li>
                 )}

@@ -35,16 +35,20 @@ export default function Basketinner() {
         } else if (op == "custom") {
             newline.amount = ct;
         }
+
         newline.total = newline.price * newline.amount;
-        newline.tax = newline.total * newline.taxRate / 100;
+        newline.tax = (newline.total * newline.taxRate) / 100;
         newline.netTotal = newline.total;
         newline.IsTotalAmount = true;
         let cookiefactory = new Cookiefactory();
         dispatch(setBasket({ basket: newline, cookies: cookiefactory.GetCookies(), token: cookiefactory.GetToken() }));
     }
-    
+
+
 
     console.log(basket);
+    
+
 
     return (
         <div className="px py col-8 col-sm-12" id="cartWrapperLeft">
@@ -58,8 +62,7 @@ export default function Basketinner() {
                                 <span className="imgInner">
                                     <Image layout="fill" 
                                         src={"https://img.antremeta.com/"+e.stockCode+"_1.jpg"} 
-                                        alt={e.name}
-                                        >
+                                        alt={e.name}>
                                     </Image>
 
                                 </span>
@@ -89,9 +92,9 @@ export default function Basketinner() {
                         </div>
                         <div className="px py col-5 PriceBpx">
                             {e.originalPrice > 0 && (
-                                <div className="fl col-12 oldPrice">{e.originalPrice * e.amount} {e.moneySymbol}</div>
+                                <div className="fl col-12 oldPrice">{(e.originalPrice * e.amount).toFixed(2)} {e.moneySymbol}</div>
                             )}
-                            <div className="fl col-12 nowPrice">{e.netTotal} {e.moneySymbol}</div>
+                            <div className="fl col-12 nowPrice">{(e.netTotal).toFixed(2)} {e.moneySymbol}</div>
                         </div>
                         <div className="px py col-3 DeleteBox" onClick={v => updBasket(e, "del")}>
                             <button className="CartItemDelete"><AiOutlineDelete></AiOutlineDelete></button>

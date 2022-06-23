@@ -1,7 +1,7 @@
 module.exports = {
 	reactStrictMode: false,
 	env: {
-		serverurl: "https://gw.antremeta.com",
+		serverurl: "http://localhost:5000",
 		hostaddress: "patirti.com",
 		elastichost: "https://185.88.172.44:9200",
 		elasticuser: "elastic",

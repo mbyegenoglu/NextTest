@@ -91,7 +91,7 @@ export default function Basketinner() {
                             </div>
                         </div>
                         <div className="px py col-5 PriceBpx">
-                            {e.originalPrice > 0 && (
+                            {e.originalPrice > e.salePrice && (
                                 <div className="fl col-12 oldPrice">{(e.originalPrice * e.amount).toFixed(2)} {e.moneySymbol}</div>
                             )}
                             <div className="fl col-12 nowPrice">{(e.netTotal).toFixed(2)} {e.moneySymbol}</div>

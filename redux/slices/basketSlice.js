@@ -50,7 +50,7 @@ export const basketSlice = createSlice({
                     const postData = { 
                         method: 'POST', 
                         headers: headerData, 
-                        body: JSON.stringify({ProductId: action.payload.basket.productId, VariantId: action.payload.basket.variantId, PriceId: action.payload.basket.priceId, Amount: lastAmount, IsTotalAmount :action.payload.basket.IsTotalAmount }) };
+                        body: JSON.stringify({ProductId: action.payload.basket.productId, VariantId: action.payload.basket.variantId, PriceId: action.payload.basket.priceId, Amount: lastAmount, IsTotalAmount :true }) };
                     let datares = await fetch(slug, postData);
                     await datares.json();
                 } catch (error) {

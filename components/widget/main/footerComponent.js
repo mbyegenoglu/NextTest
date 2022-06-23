@@ -41,8 +41,7 @@ export default function Footer() {
                                     src={'https://img1ptrti.mncdn.com/content/images/thumbs/626cd59d0d79cd803ce43b67.png'}
                                     alt={dictionary["Web.UI.Footer.LogoTitle"]}
                                     height={60} width={200}>
-                                        
-                                    </Image>
+                                </Image>
 
                             </div>
                             <div className="fl col-12 Desc">{dictionary["Web.UI.Footer.Description"]}</div>

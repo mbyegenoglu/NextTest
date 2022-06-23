@@ -184,7 +184,7 @@ a.AddToWp {background: #25d366;width: calc(50% - 30px);height: 50px;display: fle
 .productMiniInfo{margin-top:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:solid 1px #f1f1f1;display: flex;justify-content: flex-end;}
 .productMiniInfo .Item{display:flex;align-items:center;justify-content:flex-end;font-weight:500;color:#666;font-size:10px;margin:2.5px 0;width: 50%;}
 .productMiniInfo .Item.Cargo {display: flex;align-items: center;justify-content: flex-start;word-break: break-all;width: 60%;}
-.productMiniInfo .Item.Cargo svg {margin-right: 5px;height: 20px; width: 20px;}
+.productMiniInfo .Item svg {margin-right: 5px;height: 20px; width: 20px;}
 .productMiniInfo .Item.Cargo b {color: #00a821;font-size: 12px;margin-right: 5px;}
 .productMiniInfo .Item.Cargo span {font-size: 12px;font-weight: 600;}
 .productMiniInfo .Item i{font-size:13px;margin-right:5px}
@@ -457,7 +457,8 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 #Katalog .productItem{padding:5px}
 
 .productOtherColor{padding:2.5px 0}
-.productOtherColor ul{display: block;white-space: nowrap;overflow-x: hidden;width: calc(100% - 40px);height: 21px;overflow-y: hidden;}
+.productOtherColor ul{display: block;white-space: nowrap;overflow-x: auto;width: calc(100% - 40px);height: 21px;overflow-y: hidden;}
+.productOtherColor ul::-webkit-scrollbar {height: 0px;}
 .productOtherColor ul li{width:20px;height:20px;border-radius:100%;background:#e8e9e9;margin-right:5px;cursor:pointer;border: solid 1px transparent;float: none; display: inline-block;}
 .productOtherColor ul li.active{border: solid 1px #000;position: relative;}
 .productOtherColor ul li.active::after {width: 4px;height: 5px;background: #000000;content: '';display: flex;position: absolute;bottom: -2.5px;left: calc(50% - 2px);border-radius: 40px;}

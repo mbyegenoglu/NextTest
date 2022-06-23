@@ -20,9 +20,10 @@ export default function ProductsComponent({ props, children, data }) {
         {
             catid: data.refId,
             values: "",
+            minPrice: 0,
+            maxPrice: 0,
             page: 1,
             sort: "price",
-            sortby: "desc"
         });
 
     const [noMore, setNoMore] = useState(false);

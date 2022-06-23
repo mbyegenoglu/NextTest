@@ -125,6 +125,7 @@ export default function ProductBox({ item, param, dictionary }) {
         .catch(error => console.log('error', error));
     }
 
+
     return (
         <div className={Grid}>
             <a href={pItem?.seoUrl == null ? "#" : "/" + pItem?.seoUrl} className='fl col-12'>
@@ -145,7 +146,6 @@ export default function ProductBox({ item, param, dictionary }) {
                         data-id={i+"pl"+pL.refId} 
                         className={pItem.refId == pL.refId ? "active":""}
                         >
-                            {pL.propertyValues.value}
                      </li>
                 )}
 

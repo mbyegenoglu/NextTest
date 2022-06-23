@@ -18,7 +18,7 @@ import Cookiefactory from '../../../lib/cookiefactory';
 import Link from 'next/link';
 import Image from 'next/dist/client/image';
 import MobilemenuComponent from './mobilemenuComponent';
-import { AiOutlineShopping,AiOutlineHeart,AiOutlineUser,AiOutlinePhone,AiOutlineMenu,AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineShopping, AiOutlineHeart, AiOutlineUser, AiOutlinePhone, AiOutlineMenu, AiOutlineSearch } from "react-icons/ai";
 
 export default function Header({ data }) {
   const [Head, getHead] = useState([]);
@@ -68,47 +68,56 @@ export default function Header({ data }) {
     console.log(m);
   }
 
-  console.log(links);
 
+  function UserLogout(){
+    const ss = new Cookies();
+    ss.set("bnt", undefined);
+    window.location.href="/";
+  }
 
 
   const getMenuList = function () {
-    if (token == null) {
-      return <ul className="fl col-12 noLoginList">
-        <li className="px py col-12">
-          <Link href={links["Login"]}>
-            <a>{dictionary["Web.UI.LogInText"]}</a>
-          </Link>
-        </li>
-      </ul>
+    if (token == null || token == undefined) {
+      return <li>
+      <Link href={links["Login"]}>
+        <a><AiOutlineUser></AiOutlineUser></a>
+      </Link>
+    </li>
+
     } else {
-      return <ul className="fl col-12 noLoginList">
-        <li className="px py col-12">
-          <Link href={links["Userinfo"]}>
-            <a>{dictionary["Web.UI.UserInfoMiniTitle"]}</a>
-          </Link>
-        </li>
-        <li className="px py col-12">
-          <Link href={links["MyOrder"]}>
-            <a>{dictionary["Web.UI.UserLinkOrder"]}</a>
-          </Link>
-        </li>
-        <li className="px py col-12">
-          <Link href={links["MyAddress"]}>
-            <a>{dictionary["Web.UI.UserAddressTitle"]}</a>
-          </Link>
-        </li>
-        <li className="px py col-12">
-          <Link href={links["MyCoupon"]}>
-            <a>{dictionary["Web.UI.UserDiscountTitle"]}</a>
-          </Link>
-        </li>
-        <li className="px py col-12">
-          <Link href={links["MyNotification"]}>
-            <a>{dictionary["Web.UI.UserLinkNotificationInfo"]}</a>
-          </Link>
-        </li>
-      </ul>
+      return <li>
+        <div className='Item'><AiOutlineUser></AiOutlineUser></div>
+        <ul className="fl col-12 noLoginList">
+          <li className="px py col-12">
+            <Link href={links["Userinfo"]}>
+              <a>{dictionary["Web.UI.UserInfoMiniTitle"]}</a>
+            </Link>
+          </li>
+          <li className="px py col-12">
+            <Link href={links["MyOrder"]}>
+              <a>{dictionary["Web.UI.UserLinkOrder"]}</a>
+            </Link>
+          </li>
+          <li className="px py col-12">
+            <Link href={links["MyAddress"]}>
+              <a>{dictionary["Web.UI.UserAddressTitle"]}</a>
+            </Link>
+          </li>
+          <li className="px py col-12">
+            <Link href={links["MyCoupon"]}>
+              <a>{dictionary["Web.UI.UserDiscountTitle"]}</a>
+            </Link>
+          </li>
+          <li className="px py col-12">
+            <Link href={links["MyNotification"]}>
+              <a>{dictionary["Web.UI.UserLinkNotificationInfo"]}</a>
+            </Link>
+          </li>
+          <li className="px py col-12">
+              <a onClick={()=>UserLogout()}>{dictionary["Web.UI.UserLinkLogOut"] == undefined ? "Web.UI.UserLinkLogOut" : dictionary["Web.UI.UserLinkNotificationInfo"]}</a>
+          </li>
+        </ul>
+      </li>
     }
   }
   {/* Mobile Menu Start jQuery */ }
@@ -159,7 +168,7 @@ export default function Header({ data }) {
   const changeGender = (a) => {
     setgenderModal(false);
     const ss = new Cookies();
-    ss.set('Gender', a, {maxAge: 60 * 60 * 72});
+    ss.set('Gender', a, { maxAge: 60 * 60 * 72 });
   }
 
 
@@ -219,8 +228,8 @@ export default function Header({ data }) {
 
             <div className='fl col-6 col-sm-8' id='TopContact'>
               <Link href='/siparis-takip-sayfasi'><a>Kargom Nerede ?</a></Link>
-              <Link href={'tel:' + param.telno}><a> <AiOutlinePhone></AiOutlinePhone>{param.telno==undefined ? "Numara Yazın" : param.telno}</a></Link>
-              <Link href='#'><a>{dictionary["Web.UI.SaleOnPatirti"]}</a></Link> 
+              <Link href={'tel:' + param.telno}><a> <AiOutlinePhone></AiOutlinePhone>{param.telno == undefined ? "Numara Yazın" : param.telno}</a></Link>
+              <Link href='#'><a>{dictionary["Web.UI.SaleOnPatirti"]}</a></Link>
             </div>
           </div>
         </div>
@@ -236,7 +245,7 @@ export default function Header({ data }) {
 
               <div className="px py col-3 col-sm-4" id="LogoWrap">
                 <Link href={"/"}>
-                  <a className="fl col-12" id="Logo"><Image height={60} width={200}  src={"https://img1ptrti.mncdn.com/content/images/thumbs/626cd59d0d79cd803ce43b67.png"} alt="Patırtı 2022"></Image></a>
+                  <a className="fl col-12" id="Logo"><Image height={60} width={200} src={"https://img1ptrti.mncdn.com/content/images/thumbs/626cd59d0d79cd803ce43b67.png"} alt="Patırtı 2022"></Image></a>
                 </Link>
               </div>
 
@@ -249,13 +258,11 @@ export default function Header({ data }) {
 
               <div className="px py col-3 col-sm-4" id="UserWrap">
                 <ul className="fl col-12" id="userLink">
-                  <li>
-                    <div className='Item'><AiOutlineUser></AiOutlineUser></div>
-                    {getMenuList()}
-                  </li>
+
+                  {getMenuList()}
                   <li>
                     <Link href="/Favoriler">
-                    <a><AiOutlineHeart></AiOutlineHeart></a>
+                      <a><AiOutlineHeart></AiOutlineHeart></a>
                     </Link>
                   </li>
                   <li>
@@ -274,7 +281,7 @@ export default function Header({ data }) {
             <ul className="fl col-12" id="mainMenu">
               {menus[1]?.map((linkItem, index) => {
                 return <li key={index}>
-                  
+
                   <Link href={linkItem.seoUrl}>
                     <a>{linkItem.label}</a>
                   </Link>
@@ -388,7 +395,7 @@ export default function Header({ data }) {
             <span>KADIN</span>
           </li>
           <li onClick={(event) => changeGender(1)}>
-            <Image  height={300} width={300} alt='Erkek' src="https://cdn.dsmcdn.com/web/production/gender-popup-male.png"></Image>
+            <Image height={300} width={300} alt='Erkek' src="https://cdn.dsmcdn.com/web/production/gender-popup-male.png"></Image>
             <span>ERKEK</span>
           </li>
         </ul>

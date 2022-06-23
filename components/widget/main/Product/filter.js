@@ -13,6 +13,9 @@ export default function Filter({items, filterValues, setFilterValues}) {
         e.isOpened = false;
         return e;
     }));
+
+
+    const [priceFilter, setPriceFilter] = useState({minPrice : 0,maxPrice : 200});
     
     function ToggleFilter(e){
         let ec = Object.assign({}, e);
@@ -38,6 +41,16 @@ export default function Filter({items, filterValues, setFilterValues}) {
     }
 
     const dictionary = useSelector(getDictionary);
+
+    const applyPriceFilter =()=>{
+        console.log(priceFilter.minPrice);
+        console.log(priceFilter.maxPrice);
+    }
+
+
+
+
+
 
   return (
     <div className="px py col-2 col-md-12" id="leftSide">
@@ -84,18 +97,28 @@ export default function Filter({items, filterValues, setFilterValues}) {
                 </div>
                            
             })}
-
-
             <div className='fl col-12 filterWrap'>
                 <div className='fl col-12 FilterTitle'>{dictionary["Web.UI.FilterPriceRange"]}</div>
                 <div className='fl col-12 filterWrapper priceSection'>
                     <div className='px py col-6'>
-                        <input placeholder={dictionary["Web.UI.PriceFilterMin"]} type={"text"} name="minPrice"></input>
+                        <input 
+                            placeholder={dictionary["Web.UI.PriceFilterMin"]} 
+                            name={"minPrice"}
+                            type={"text"} 
+                            min={101} 
+                            max={200}>
+                        </input>
                     </div>
                     <div className='px py col-6'>
-                        <input placeholder={dictionary["Web.UI.PriceFilterMax"]} type={"text"} name="maxPrice"></input>
+                        <input 
+                            placeholder={dictionary["Web.UI.PriceFilterMax"]} 
+                            name={"maxFilterPrice"}
+                            type={"text"} 
+                            min={101} 
+                            max={200}>
+                        </input>
                     </div>
-                    <button id='applyPriceFilter'>
+                    <button id='applyPriceFilter' onClick={() => applyPriceFilter()}>
                         <AiOutlineCheck></AiOutlineCheck>
                     </button>
                 </div>

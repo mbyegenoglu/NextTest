@@ -52,14 +52,10 @@ export default function ProductTop({ title, type, setBySortUp, currentSort}) {
     function TopRight(){
         if(type == true){
             return <>
-                <select name="sortList" id="sort" onChange={(e) => ChangeSortBy(e.target.value)}>
+                <select name="sortList" id="sort" defaultValue={currentSort} onChange={(e) => ChangeSortBy(e.target.value)}>
                     {lists.filter(m => m.group == 2).map(e =>
                         {
-                            if (currentSort == e.key) {
-                               return <option value={e.key} key={e.key} selected>{e.title}</option> 
-                            } else {
-                               return <option value={e.key} key={e.key}>{e.title}</option> 
-                            }
+                            return <option value={e.key} key={e.key}>{e.title}</option> 
                         }  
                     )}
                 </select>

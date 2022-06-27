@@ -10,12 +10,14 @@ import ProductTop from "./Product/productTop";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ListSubCat from "./List/ListSubCat";
 import Dictionary from "../../../lib/dictionary";
+import { useRouter } from 'next/router'
 
 export default function ProductsComponent({ props, children, data }) {
     const param = new Dictionary(useSelector(getParam));
     const dictionary = new Dictionary(useSelector(getDictionary));
     const [filterValues, setFilterValues] = useState([]);
     const [productItems, setProductItems] = useState([]);
+    const router = useRouter()
     const [filterUrl, setFilterUrl] = useState(
         {
             catid: data.refId,
@@ -62,8 +64,15 @@ export default function ProductsComponent({ props, children, data }) {
     }, [filterValues]);
 
     useEffect(async () => {
-        GellAllProduct();
-    }, [filterUrl]);
+        var currentLink = window.location.href;
+        if(currentLink.indexOf("=")> -1){
+            
+        }
+        else{
+            GellAllProduct();
+        }
+        
+    }, [/*filterUrl*/]);
 
     const fetchProduct = async () => {
         if (noMore) return;
@@ -112,6 +121,7 @@ export default function ProductsComponent({ props, children, data }) {
     function setBySortUpFunc(e) {
         setFilterUrl({...filterUrl, sort: e, page:1});
         GellAllProduct ();
+        router.push( window.location.href +'?'+ Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), undefined, { shallow: true })
         console.log(filterUrl);
     }
 

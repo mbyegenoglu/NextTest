@@ -21,9 +21,9 @@ export default function ProductsComponent({ props, children, data }) {
             catid: data.refId,
             values: "",
             minPrice: 0,
-            maxPrice: 0,
+            maxPrice: 50,
             page: 1,
-            sort: "price",
+            sort: "price_desc",
         });
 
     const [noMore, setNoMore] = useState(false);
@@ -33,7 +33,6 @@ export default function ProductsComponent({ props, children, data }) {
         "listid": data.refId,
         "page": page
     });
-
 
     useEffect(() => {
         setProductItems([]);
@@ -62,11 +61,8 @@ export default function ProductsComponent({ props, children, data }) {
         }
     }, [filterValues]);
 
-
     useEffect(async () => {
-        const res = await fetch("/api/listing?" + Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), requestOptions);
-        const Data = await res.json();
-        setProductItems(Data);
+        GellAllProduct();
     }, [filterUrl]);
 
     const fetchProduct = async () => {
@@ -75,6 +71,13 @@ export default function ProductsComponent({ props, children, data }) {
         const res = await fetch("/api/listing?" + Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), requestOptions);
         const Data = await res.json();
         return Data;
+    };
+
+    async function GellAllProduct (){
+        setProductItems([]);
+        const res = await fetch("/api/listing?" + Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), requestOptions);
+        const Data = await res.json();
+        setProductItems(Data);
     };
 
     const fetchData = async () => {
@@ -106,15 +109,25 @@ export default function ProductsComponent({ props, children, data }) {
     };
 
 
+    function setBySortUpFunc(e) {
+        setFilterUrl({...filterUrl, sort: e, page:1});
+        GellAllProduct ();
+        console.log(filterUrl);
+    }
+
+    function getByPriceFilter(m,n) {
+        setFilterUrl({...filterUrl, maxPrice: m, minPrice: n, page:1});
+        GellAllProduct (); 
+    }
 
     return (
         <Fragment>
-            <ProductTop title={data.name} type={true}></ProductTop>
+            <ProductTop title={data.name} type={true} setBySortUp={setBySortUpFunc} currentSort={filterUrl.sort}></ProductTop>
             <div className="px py col-12" id="ProductList">
                 <div className="row">
                     <div className="container-fluid">
 
-                        <Filter items={data.properties} filterValues={filterValues} setFilterValues={setFilterValues} ></Filter>
+                        <Filter items={data.properties} filterValues={filterValues} setFilterValues={setFilterValues} getByPriceFilter={getByPriceFilter}></Filter>
 
                         <div className="px py col-10 col-md-12" id="mainSide">
 

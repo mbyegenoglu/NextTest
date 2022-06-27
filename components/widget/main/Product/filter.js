@@ -7,7 +7,7 @@ import Dictionary from '../../../../lib/dictionary';
 
 import {BiChevronDown} from "react-icons/bi";
 import {AiOutlineCheck} from "react-icons/ai";
-export default function Filter({items, filterValues, setFilterValues}) {
+export default function Filter({items, filterValues, setFilterValues,getByPriceFilter}) {
 
     const [filters, setFilters] = useState(items.map(e => {
         e.isOpened = false;
@@ -15,7 +15,8 @@ export default function Filter({items, filterValues, setFilterValues}) {
     }));
 
 
-    const [priceFilter, setPriceFilter] = useState({minPrice : 0,maxPrice : 200});
+    const [priceMaxFilter, setPriceMaxFilter] = useState(0);
+    const [priceMinFilter, setPriceMinFilter] = useState(0);
     
     function ToggleFilter(e){
         let ec = Object.assign({}, e);
@@ -43,8 +44,7 @@ export default function Filter({items, filterValues, setFilterValues}) {
     const dictionary = useSelector(getDictionary);
 
     const applyPriceFilter =()=>{
-        console.log(priceFilter.minPrice);
-        console.log(priceFilter.maxPrice);
+        getByPriceFilter(priceMaxFilter, priceMinFilter)
     }
 
 
@@ -105,6 +105,7 @@ export default function Filter({items, filterValues, setFilterValues}) {
                             placeholder={dictionary["Web.UI.PriceFilterMin"]} 
                             name={"minPrice"}
                             type={"text"} 
+                            onChange={event => setPriceMinFilter(event.target.value)}
                             min={101} 
                             max={200}>
                         </input>
@@ -114,6 +115,7 @@ export default function Filter({items, filterValues, setFilterValues}) {
                             placeholder={dictionary["Web.UI.PriceFilterMax"]} 
                             name={"maxFilterPrice"}
                             type={"text"} 
+                            onChange={event => setPriceMaxFilter(event.target.value)}
                             min={101} 
                             max={200}>
                         </input>

@@ -23,23 +23,33 @@ export default async function handler(req, res) {
         }
     }
     if (!!req.query.sort) {
-        let sortby = req.query.sortby || "asc";
+        //let sortby = req.query.sortby || "asc";
         switch (req.query.sort) {
-            case "price":
-                query.sort = [{ "variants.prices.salePrice": { "order": sortby } }]
+            case "price_desc":
+                query.sort = [{ "variants.prices.price": { "order": "desc" } }];
                 break;
-  
+            case "price_asc":
+                query.sort = [{ "variants.prices.price": { "order": "asc" } }];
+                break;
             default:
+                query.sort = [{ "sortNr": { "order": "desc" } }];
                 break;
         }
+    } else {
+        query.sort = [{ "sortNr": { "order": "desc" } }];
     }
     if (!!req.query.pricemin || !!req.query.pricemax) {
-      const range = { "variants.prices.price": {} };
-      if (!!req.query.pricemin) range["variants.prices.price"].gte = parseFloat(req.query.pricemin);
-      if (!!req.query.pricemax) range["variants.prices.price"].lte = parseFloat(req.query.pricemax);
-      query.query.bool.must.push({ range: range });
+        const range = { "variants.prices.price": {} };
+        if (!!req.query.pricemin) range["variants.prices.price"].gte = parseFloat(req.query.pricemin);
+        if (!!req.query.pricemax) range["variants.prices.price"].lte = parseFloat(req.query.pricemax);
+        query.query.bool.must.push({ range: range });
+    } else {
+        const range = { "variants.prices.price": {"gte": 0} };
+        query.query.bool.must.push({ range: range });
     }
-    console.log(JSON.stringify(query));
+    const stockRange = { "variants.prices.stock": {"gte": 0} };
+    query.query.bool.must.push({ range: stockRange });
+
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     let elasresp = await fetch(process.env.elastichost + "/product/_search", {
         method: "POST",
@@ -49,13 +59,16 @@ export default async function handler(req, res) {
     let result = await elasresp.json();
     let listing = result.hits.hits.map(_s => {
         let e = _s._source;
-        let p = e.productType == 1 ? e.variants.reduce((a, e) => { e.prices.forEach(p => a.push(p)); return a; }, []).sort((a, b) => a - b)[0] : e.prices.sort((a, b) => a - b)[0];
+        let p = e.productType == 1 ? e.variants.reduce((a, e) => { e.prices.forEach(p => a.push(p)); return a; }, []).sort((a, b) => a.price - b.price)[0] : e.prices.sort((a, b) => a.price - b.price)[0];
+        if (p == undefined) {
+            console.log(JSON.stringify(_s._source));
+        }
         return {
             refId: e.refId,
             productType: e.productType,
             stockCode: e.stockCode,
             productBrandName: e.productBrandName,
-            stock: p.stock,
+            stock: p.stock == null ? 0 : p.stock,
             isVirtualStock: e.isVirtualStock,
             virtualStockDeliveryDay: e.virtualStockDeliveryDay,
             isDisablePurchase: e.isDisablePurchase,
@@ -68,7 +81,7 @@ export default async function handler(req, res) {
             description: e.description,
             defaultPrice: p.defaultPrice == null ? 0 : p.defaultPrice,
             salePrice: p.salePrice == null ? 0 : p.salePrice,
-            price: p.price == null ? 0 : p.price,
+            price: p.discountPrice == null ? (p.price == null ? 0 : p.price) : p.discountPrice,
             priceListId: p.priceListId,
             moneySymbol: p.moneySymbol,
             supplier: p.supplier,
@@ -76,11 +89,11 @@ export default async function handler(req, res) {
             images: e.medias.map(m => m.path),
             productLinks: e.linkeds,
             variantProperties: [],
-            discountId: null
+            discountId: p.discountId,
+            discountPrice: p.discountPrice,
         };
     });
-  
+
     res.status(200).json(listing);
-  
-  }
-  
+
+}

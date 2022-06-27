@@ -62,8 +62,7 @@ export default function ProductRight({ data }) {
                         moneySymbol: sPrice.moneySymbol, 
                         brand: Product.brandName, 
                         name: Product.productName, 
-                        deliveryTime: Product.deliveryTime, 
-                        priceId: sPrice.priceId }, cookies: cookiefactory.GetCookies(), token: cookiefactory.GetToken() }));
+                        deliveryTime: Product.deliveryTime, priceId: sPrice.priceId }, cookies: cookiefactory.GetCookies(), token: cookiefactory.GetToken() }));
 
             $(".AddToCart button.addToCart").css("background", "#2ecc71");
             $(".AddToCart button.addToCart").text("Sepete Eklendi.");
@@ -181,7 +180,7 @@ export default function ProductRight({ data }) {
                                 });
                             })}
                         </ul>
-                        <div className='fl col-12 addToCartNotification'>@Web.UI.SizeAlert</div>
+                        <div className='fl col-12 addToCartNotification'>{dictionary["Web.UI.SizeAlert"] == undefined ? "Web.UI.SizeAlert": dictionary["Web.UI.SizeAlert"]}</div>
                     </div>
                 </div>
 

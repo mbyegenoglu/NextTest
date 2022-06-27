@@ -8,10 +8,13 @@ import { getList } from '../../../../redux/slices/listSlice'
 import $ from 'jquery';
 import Dictionary from '../../../../lib/dictionary';
 
-export default function ProductTop({ title, type}) {
+export default function ProductTop({ title, type, setBySortUp, currentSort}) {
 
     const lists = useSelector(getList);
     const dictionary = useSelector(getDictionary);
+
+    const [sortBy, setSortBy] = useState("sortNr");
+
 
     const setFilterWrap = () => {
         $("#Filter").addClass("active");
@@ -46,14 +49,19 @@ export default function ProductTop({ title, type}) {
         });
       }
 
-    
     function TopRight(){
         if(type == true){
             return <>
-                <select name="sortList" id="sort">i
-                        {lists.filter(m => m.group == 2).map(e =>
-                            <option value={e.key} key={e.key}>{e.title}</option>
-                        )}
+                <select name="sortList" id="sort" onChange={(e) => ChangeSortBy(e.target.value)}>
+                    {lists.filter(m => m.group == 2).map(e =>
+                        {
+                            if (currentSort == e.key) {
+                               return <option value={e.key} key={e.key} selected>{e.title}</option> 
+                            } else {
+                               return <option value={e.key} key={e.key}>{e.title}</option> 
+                            }
+                        }  
+                    )}
                 </select>
                 <div className={'mobile gridSystem ' + getGridValue} onClick={setGrid}>
                     <button className='gridButton F'>
@@ -80,6 +88,9 @@ export default function ProductTop({ title, type}) {
         }
     }
     
+    function ChangeSortBy(e){
+       setBySortUp(e);
+    }
 
 
     return (

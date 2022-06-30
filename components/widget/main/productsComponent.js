@@ -16,63 +16,46 @@ export default function ProductsComponent({ props, children, data }) {
     const param = new Dictionary(useSelector(getParam));
     const dictionary = new Dictionary(useSelector(getDictionary));
     const [filterValues, setFilterValues] = useState([]);
-    const [productItems, setProductItems] = useState([]);
-    const router = useRouter()
-    const [filterUrl, setFilterUrl] = useState(
-        {
-            catid: data.refId,
-            values: "",
-            minPrice: 0,
-            maxPrice: 50,
-            page: 1,
-            sort: "price_desc",
-        });
-
+    const [productItems, setProductItems] = useState([]);       
     const [noMore, setNoMore] = useState(false);
-    const [page, setPage] = useState(1);
-
-    var raw = JSON.stringify({
-        "listid": data.refId,
-        "page": page
-    });
+    const [page, setPage] = useState(1); 
+    const [filterUrl, setFilterUrl] = useState({catid: data.refId, values: "", minPrice: 0, maxPrice: 0, page: 1, sort: "sortNr",});
+    
+    var requestOptions = {
+        method: 'POST',
+        headers: {"UniqueId":"214127346123","locale":"TR","IP":"2.43534.21312","Language":"tr","Money":"TL","HostAddress":"patirti.com","Content-Type":"application/json"},
+        body: JSON.stringify({"listid": data.refId,"page": page}),
+        redirect: 'follow'
+    };
+    
+    const router = useRouter();
 
     useEffect(() => {
         setProductItems([]);
-        var Category = data.refId;
-
         const FilterLinkArray = data.properties.filter(m => m.propertyValues.filter(mm => filterValues.indexOf(mm.refId) >= 0).length > 0).reduce((a, v) => { a[v.slug] = v.propertyValues.filter(m => filterValues.indexOf(m.refId) >= 0).map(k => k.refId); return a; }, {});
-
         var result = Object.keys(FilterLinkArray).reduce((m, a) => {
             m[a] = FilterLinkArray[a].join("|");
             return m;
         }, {});
-
         result = Object.keys(result).reduce((n, b) => {
             n.push(b + ":" + result[b]);
             return n;
-        }, []).join(",");
-        
+        }, []).join(",");     
         var linkbuild = Object.assign({}, filterUrl);
-        linkbuild.catid = Category;
+        linkbuild.catid = data.refId;
         linkbuild.values = result;
         linkbuild.page = 1;
         
-        if (filterUrl != linkbuild) {
-            setFilterUrl(linkbuild);
-            setNoMore(false);
-        }
+       if (filterUrl != linkbuild) {
+            console.log(linkbuild);
+           setFilterUrl(linkbuild);
+           setNoMore(false);
+      }
     }, [filterValues]);
 
-    useEffect(async () => {
-        var currentLink = window.location.href;
-        if(currentLink.indexOf("=")> -1){
-            
-        }
-        else{
-            GellAllProduct();
-        }
-        
-    }, [/*filterUrl*/]);
+    useEffect(async () => { 
+        GellAllProduct();
+    }, [filterUrl]);
 
     const fetchProduct = async () => {
         if (noMore) return;
@@ -88,6 +71,12 @@ export default function ProductsComponent({ props, children, data }) {
         const Data = await res.json();
         setProductItems(Data);
     };
+    async function GellAllNormalProduct (e){
+        setProductItems([]);
+        const res = await fetch("/api/listing?"+ e, requestOptions);
+        const Data = await res.json();
+        setProductItems(Data);
+    };
 
     const fetchData = async () => {
         let p = page;
@@ -96,38 +85,16 @@ export default function ProductsComponent({ props, children, data }) {
         setProductItems([...productItems, ...fetchNowProducts]);
         if (fetchNowProducts.length < 20) {
             setNoMore(true);
-        }
-        
-    };
-
-
-    var myHeaders = new Headers();
-    myHeaders.append("UniqueId", "214127346123");
-    myHeaders.append("locale", "TR");
-    myHeaders.append("IP", "2.43534.21312");
-    myHeaders.append("Language", "tr");
-    myHeaders.append("Money", "TL");
-    myHeaders.append("HostAddress", "patirti.com");
-    myHeaders.append("Content-Type", "application/json");
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+        }   
     };
 
 
     function setBySortUpFunc(e) {
-        setFilterUrl({...filterUrl, sort: e, page:1});
-        GellAllProduct ();
-        router.push( window.location.href +'?'+ Object.keys(filterUrl).map(m => m + "=" + filterUrl[m]).join("&"), undefined, { shallow: true })
-        console.log(filterUrl);
+        setFilterUrl({...filterUrl, sort: e});
     }
 
     function getByPriceFilter(m,n) {
-        setFilterUrl({...filterUrl, maxPrice: m, minPrice: n, page:1});
-        GellAllProduct (); 
+        setFilterUrl({...filterUrl, maxPrice: m, minPrice: n});     
     }
 
     return (

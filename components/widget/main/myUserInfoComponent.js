@@ -1,7 +1,8 @@
-import { React, useState } from 'react';
+import React, {useState,useEffect  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UserProfileMenu from './User/UserProfileMenu';
 import { getDictionary } from '../../../redux/slices/dictionarySlice';
+import Cookiefactory from '../../../lib/cookiefactory';
 
 export default function MyUserInfoComponent() {
 
@@ -45,8 +46,32 @@ export default function MyUserInfoComponent() {
         e.preventDefault();
         console.log(cUser);
     }
-    
 
+
+    const req = null; const res = null;
+    const cookiefactory = new Cookiefactory();
+    const headerData = cookiefactory.GetCookies(req, res);
+    const token = cookiefactory.GetToken(req, res);
+    if (!!token) {
+        headerData.Authorization = "Bearer " + cookiefactory.GetToken(req, res);
+    }
+
+
+    function GetUserInfo() {
+        var requestOptions = {
+            method: 'GET',
+            headers: headerData,
+            redirect: 'follow'
+        };
+        fetch("https://auth.antremeta.com/user/getuserinfo", requestOptions)
+        .then(response => response.json())
+        .then(result => { setUser(result.data); console.log(result.data);})
+        .catch(error => console.log('error', error));
+    }
+    
+    useEffect(() => {
+        GetUserInfo();
+      },[]);
 
   return (
     <div className="px py col-12" id="userDetail">
@@ -63,16 +88,16 @@ export default function MyUserInfoComponent() {
                                 <form action='' className='fl col-12 InfoInner' onSubmit={handleUserSubmit}>
                                     <div className='fl col-12 miniTitle'>{dictionary["Web.UI.UserInfoMiniTitle"]}</div>
                                     <div className='fl py col-12 form-group'>
-                                        <input type={"text"} name={'Name'} placeholder={dictionary["Web.UI.UserInfoName"]}></input>
+                                        <input type={"text"} name={'Name'} placeholder={dictionary["Web.UI.UserInfoName"]} value={cUser.Name}></input>
                                     </div>
                                     <div className='fl py col-12 form-group'>
-                                        <input type={"text"} name={'Surname'} placeholder={dictionary["Web.UI.UserInfoSurname"]}></input>
+                                        <input type={"text"} name={'Surname'} placeholder={dictionary["Web.UI.UserInfoSurname"]} value={cUser.Surname}></input>
                                     </div>
                                     <div className='fl py col-12 form-group'>
-                                        <input type={"text"} name={'Mail'} placeholder={dictionary["Web.UI.UserInfoMail"]}></input>
+                                        <input type={"text"} name={'Mail'} placeholder={dictionary["Web.UI.UserInfoMail"]} value={cUser.Mail}></input>
                                     </div>
                                     <div className='fl py col-12 form-group'>
-                                        <input type={"text"}  name={'Phone'} placeholder={dictionary["Web.UI.UserInfoPhone"] == undefined ? "Web.UI.UserInfoPhone":dictionary["Web.UI.UserInfoPhone"]}></input>
+                                        <input type={"text"}  name={'Phone'} placeholder={dictionary["Web.UI.UserInfoPhone"] == undefined ? "Web.UI.UserInfoPhone":dictionary["Web.UI.UserInfoPhone"]} value={cUser.Phone}></input>
                                     </div>
                                     <div className='fl py col-12 form-group'>
                                         <input type={"submit"} className="btn btn-primary" value={dictionary["Web.UI.UserInfoUpdateButton"] == undefined ? "Web.UI.UserInfoUpdateButton":dictionary["Web.UI.UserInfoUpdateButton"]}></input>

@@ -7,9 +7,9 @@ import { getList } from '../../../../redux/slices/listSlice';
 import { getParam } from '../../../../redux/slices/paramSlice';
 import ReactModal from 'react-modal';
 import Dictionary from '../../../../lib/dictionary';
-import { json } from 'body-parser';
 
-export default function RegisterInner({ authType }) {
+
+export default function RegisterInner({ authType, pageType }) {
 
     const dictionary = useSelector(getDictionary);
     const param = new Dictionary(useSelector(getParam));

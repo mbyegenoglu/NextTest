@@ -113,34 +113,21 @@ function Address(props) {
         }
         else if (modalType == "Update") {
             var raw = JSON.stringify(currentAddress);
-
             headerData["Content-Type"] = "application/json";
-
-            var requestOptions = {
-                method: 'POST',
-                headers: headerData,
-                body: raw,
-                redirect: 'follow'
-            };
+            var requestOptions = {method: 'POST',headers: headerData,body: raw,redirect: 'follow'};
 
 
             fetch("https://auth.antremeta.com/CustomerAddress/Update/" + currentAddress.id, requestOptions)
                 .then(response => response.text())
-                .then(result => {
-                    GetAllAddress();
-                    setIsOpen(false);
-                })
+                .then(result => { GetAllAddress(); setIsOpen(false); })
                 .catch(error => console.log('error', error));
 
         }
-
-
 
     }
     useEffect(() => {
         if (token != undefined) {
             GetAllAddress();
-            console.log(GetAllAddress());
         }
         else {
             setRegLogIsOpen(true);

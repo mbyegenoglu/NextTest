@@ -57,15 +57,15 @@ export default function Header({ data }) {
 
 
   function changeLanguage(m) {
-    console.log(m);
+    cookiefactory.SetCookies({ "currentLang": m });
   }
 
   function changeMoney(m) {
-    console.log(m);
+    cookiefactory.SetCookies({ "currentMoney": m })
   }
 
   function changeLocation(m) {
-    console.log(m);
+    cookiefactory.SetCookies({ "currentLocation": m })
   }
 
 

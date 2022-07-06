@@ -12,8 +12,7 @@ import Link from 'next/link';
 import Image from 'next/dist/client/image';
 
 export default function CheckoutComponent({ props, children, data }) {
-
-
+    
     const basket = useSelector(getBasket);
     const cookiefactory = new Cookiefactory();
     const cookies = cookiefactory.GetCookies();
@@ -28,6 +27,7 @@ export default function CheckoutComponent({ props, children, data }) {
         }
         dispatch(postBasketData({ headers: headerData }));
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
     const [CheckoutInfo, setCheckout] = useState({
@@ -78,7 +78,6 @@ export default function CheckoutComponent({ props, children, data }) {
     }
 
     function changeCreditCard(e){
-        console.log(e);
         let temp = {};
         Object.assign(temp, CheckoutInfo);
         temp.currentCreditCardNumber = e.cardNumber,

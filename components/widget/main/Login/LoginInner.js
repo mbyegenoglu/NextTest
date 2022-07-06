@@ -8,7 +8,7 @@ import { getParam } from '../../../../redux/slices/paramSlice';
 import ReactModal from 'react-modal';
 import Dictionary from '../../../../lib/dictionary';
 
-export default function LoginInner({ authType }) {
+export default function LoginInner({ authType , pageType}) {
 
 
     const dictionary = useSelector(getDictionary);
@@ -60,7 +60,14 @@ export default function LoginInner({ authType }) {
                 var Link = window.location.hostname;
                 var oldLink = document.referrer;
                 if (oldLink.indexOf(Link) > -1) {
-                    window.location.href = oldLink;
+                    if(pageType == "Normal"){
+                        window.location.href = oldLink;
+                    }
+                    else{
+                        location.reload();
+
+                    }
+                    
                 }
                 else {
                     window.location.href = "/";

@@ -6,6 +6,9 @@ import { GrClose } from 'react-icons/gr';
 import { getDictionary } from '../../../../redux/slices/dictionarySlice';
 import Dictionary from '../../../../lib/dictionary';
 import Link from 'next/link';
+import LoginInner from '../Login/LoginInner';
+import SocialInner from '../Login/SocialInner';
+import RegisterInner from '../Login/RegisterInner';
 
 function Address(props) {
     const [UserAddress, setAddress] = useState(props.a);
@@ -139,16 +142,16 @@ function Address(props) {
             GetAllAddress();
             console.log(GetAllAddress());
         }
-        else{
+        else {
             setRegLogIsOpen(true);
         }
     }, []);
 
     const nextStepMan = () => {
-        if(props.checkoutinfo.currentAddress != ""){
-            props.checkOutForm.current.submit() 
+        if (props.checkoutinfo.currentAddress != "") {
+            props.checkOutForm.current.submit()
         }
-        else{
+        else {
             alert("Adres Seçiniz");
         }
     }
@@ -169,6 +172,15 @@ function Address(props) {
         }
     }
 
+
+    const [authType, setAuthType] = useState(true);
+    const changeType = () => {
+      if (authType) {
+        setAuthType(false);
+      } else {
+        setAuthType(true);
+      }
+    }
 
 
 
@@ -268,22 +280,29 @@ function Address(props) {
                 overlayClassName="modalOverlay">
                 <div className='modalBody'>
                     <div className='ContinuePayment'>
-                        <h3 className='fl col-12'>Burası Modal Cart Curt Başlıl</h3>
-                        <p className='fl col-12'> Burası Modal bir paragraflık yazı olacak</p>
-                        
-                        <ul className='fl col-12'>
-                            <li>
-                                <Link href={"/giris"}>
-                                    <a>Giriş Yap</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={"/kayit"}>
-                                    <a>Kayıt Ol</a>
-                                </Link>
-                            </li>
-                            <li><a href='#'>Üye Olmadan Devam Et</a></li>
-                        </ul>
+                        <h3>@Web.UI.ContinuePaymentTitle</h3>
+                        <p>@Web.UI.ContinuePaymentDescription</p>
+                        <div className='fl col-12 NewLoginPage'>
+                            <div className='NewLoginPageInner'>
+                                <div className='fl col-12 NormalLogin'>
+                                    <ul className='fl col-12'>
+                                        <li className={authType ? "active" : "passive"} onClick={changeType}>Giriş Yap</li>
+                                        <li className={authType ? "passive" : "active"} onClick={changeType}>Üye Ol</li>
+                                    </ul>
+                                    <LoginInner authType={authType} pageType={"Checkout"}></LoginInner>
+                                    <RegisterInner authType={authType} pageType={"Checkout"}></RegisterInner>
+
+                                    <div className='divider'>
+                                        <span>@Web.UI.Or</span>
+                                    </div>
+                                    <button className='NoLoginNoRegister' onClick={() => NoLoginNoRegister()}>
+                                        @Web.UI.NoLoginNoRegister
+                                    </button>
+
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Modal>

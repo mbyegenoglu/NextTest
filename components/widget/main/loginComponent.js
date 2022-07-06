@@ -33,8 +33,8 @@ export default function LoginComponent({ props, children, data }) {
                 <li className={authType ? "active" : "passive"} onClick={changeType}>Giriş Yap</li>
                 <li className={authType ? "passive" : "active"} onClick={changeType}>Üye Ol</li>
               </ul>
-              <LoginInner authType={authType}></LoginInner>
-              <RegisterInner authType={authType}></RegisterInner>
+              <LoginInner authType={authType} pageType={"Normal"}></LoginInner>
+              <RegisterInner authType={authType} pageType={"Normal"}></RegisterInner>
             </div>
             <SocialInner></SocialInner>
           </div>

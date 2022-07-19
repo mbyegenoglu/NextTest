@@ -102,7 +102,7 @@ export default function MyUserInfoComponent() {
         };
         fetch("https://auth.antremeta.com/user/getuserinfo", requestOptions)
             .then(response => response.json())
-            .then(result => {console.log(result.data) /*setUser()*/ })
+            .then(result => {console.log(result.data) /*setUser("asdjkbnsdogadsghfadsgfdas")*/ })
             .catch(error => console.log('error', error));
     }
     const UpdateUserInfo = async values => {

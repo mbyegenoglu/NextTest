@@ -20,7 +20,7 @@ const validationSchemaUser = Yup.object().shape({
     email: Yup.string().required('Bu alan boş bırakılamaz')
 });
 
-export default function myUserInfoComponent() {
+export default function MyUserInfoComponent() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [cUser, setUser] = useState({
         name:"",

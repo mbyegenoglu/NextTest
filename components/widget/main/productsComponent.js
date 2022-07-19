@@ -97,6 +97,8 @@ export default function ProductsComponent({ props, children, data }) {
         setFilterUrl({...filterUrl, maxPrice: m, minPrice: n});     
     }
 
+    console.log(data);
+
     return (
         <Fragment>
             <ProductTop title={data.name} type={true} setBySortUp={setBySortUpFunc} currentSort={filterUrl.sort}></ProductTop>
@@ -110,22 +112,24 @@ export default function ProductsComponent({ props, children, data }) {
 
                             <ListSubCat Stories={data.subcats}></ListSubCat>
                             <FilterHistory items={data.properties} filterValues={filterValues} setFilterValues={setFilterValues}></FilterHistory>
-                            <InfiniteScroll
-                                className="fl col-12"
-                                id="Katalog"
-                                dataLength={productItems.length}
-                                next={fetchData}
-                                hasMore={!noMore}
-                                loader={<div className='fl col-12 ListBottomHr'><span></span></div>}
-                                endMessage={
-                                    <p className="fl col-12" id="NoMoreProduct" style={{ textAlign: 'center' }}>
-                                        <b>{dictionary["@Web.UI.YouSawAllProduct"] == null ? "@Web.UI.YouSawAllProduct" : dictionary.dictionary["@Web.UI.YouSawAllProduct"]}</b>
-                                    </p>
-                                }>
-                                {productItems.map((e, i) => {
-                                    return <ProductBox item={e} key={i} param={param} dictionary={dictionary}></ProductBox>
-                                })}
-                            </InfiniteScroll>
+                            <div className="fl col-12" id="Katalog">
+                                <InfiniteScroll
+                                    className="fl col-12"
+                                    id="Katalog"
+                                    dataLength={productItems.length}
+                                    next={fetchData}
+                                    hasMore={!noMore}
+                                    loader={<div className='fl col-12 ListBottomHr'><span></span></div>}
+                                    endMessage={
+                                        <p className="fl col-12" id="NoMoreProduct" style={{ textAlign: 'center' }}>
+                                            <b>{dictionary["@Web.UI.YouSawAllProduct"] == null ? "@Web.UI.YouSawAllProduct" : dictionary.dictionary["@Web.UI.YouSawAllProduct"]}</b>
+                                        </p>
+                                    }>
+                                    {productItems.map((e, i) => {
+                                        return <ProductBox item={e} key={i} param={param} dictionary={dictionary}></ProductBox>
+                                    })}
+                                </InfiniteScroll>
+                            </div>
                         </div>
                     </div>
                 </div>

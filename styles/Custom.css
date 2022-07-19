@@ -644,7 +644,7 @@ button.closeModel{background:transparent;height:40px;width:40px;display:flex;ali
   100% {background-color:#eeeeee; transform:rotate(0deg) }
 }
 
-.loginError {background: red;display: flex;align-items: center;justify-content: center;padding: 10px;text-align: center;color: #fff;font-weight: 500;border-radius: 0 0 10px 10px;}
+.loginError, .formik-Error{background: red;display: flex;align-items: center;justify-content: center;padding: 10px;text-align: center;color: #fff;font-weight: 500;border-radius: 0 0 10px 10px;}
 button.btnNoRegNoLog {align-items: center;border: none;border-radius: 8px;box-sizing: border-box;cursor: pointer;display: flex;font-stretch: normal;font-style: normal;font-weight: 600;justify-content: center;outline: none;padding: 8px;position: relative;text-decoration: none;background-color: #cccccc;color: #000;font-size: 16px;height: 56px;min-width: 100%!important;margin-top: 40px;float: left;}
 
 #OrderDetail{margin:50px 0}
@@ -851,7 +851,7 @@ body.GenderModalOpened{overflow:hidden}
 }
 
 @media screen and (max-width: 1025px) {
-    
+    #BannerList{padding:0;}
     #Filter .filterWrap .filterWrapper .filterItemList > li.square .chcbox.checked {margin: 0 !important;top: calc(50% - 16px);left: calc(50% - 8px);}
     .gridSystem.mobile {display: flex;}
     body.counterWithBody .mobileMenu {height: calc(100vh - 170px);top: 170px;}
@@ -1023,7 +1023,7 @@ body.GenderModalOpened{overflow:hidden}
     #ProductListNewWidget #CatalogSubCategories .Item::After {width: 15px;height: 15px;content: '';display: flex;position: absolute;background: url('../Img/Icons/right-arrow-svgrepo-com.svg') right center no-repeat;right: 5px;top: calc(50% - 7.5px);background-size: 20px;}
     #ProductListNewWidget  #CatalogSubCategories .Item img {height: auto;width: 20px;border-radius: 0;margin-right: 5px;}
     #CatalogSubCategories{padding: 0;}
-    #BannerList .px.py {padding: 5px 0;}
+    #BannerList .px.py {padding: 1px 0;}
     #ProductListTop.sticky {height: 104px;}
     .NormalLogin, .SocialLogin {padding: 20px;}   
     .SocialLogin ul li {width: calc(50% - 5px);}  

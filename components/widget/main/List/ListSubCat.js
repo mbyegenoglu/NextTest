@@ -21,8 +21,8 @@ export default function ListSubCat({Stories}) {
               return  <Link href={"/" + s.url} key={index}>
                 <a className="Item" >
                     <Image 
-                    height={112.5} 
-                    width={75} 
+                    height={150} 
+                    width={100} 
                     src={s.image == null ? s.image:DefaultImage} 
                     alt={s.name}> 
                     </Image>

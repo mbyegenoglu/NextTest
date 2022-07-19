@@ -7,7 +7,11 @@ import Dictionary from '../../../../lib/dictionary';
 
 import {BiChevronDown} from "react-icons/bi";
 import {AiOutlineCheck} from "react-icons/ai";
+
 export default function Filter({items, filterValues, setFilterValues,getByPriceFilter}) {
+
+
+
 
     const [filters, setFilters] = useState(items.map(e => {
         e.isOpened = false;

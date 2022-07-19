@@ -112,6 +112,7 @@ export default function ProductBox({ item, param, dictionary }) {
                 <span className="name">{pItem?.productBrandName}</span>
                 {pItem?.productName}
             </div>
+            
         </div>
     )
 

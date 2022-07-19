@@ -198,6 +198,7 @@ export default function ProductRight({ data }) {
                     </div>
                 </div>
 
+
                 <div className="fl col-12 productMiniInfo">
                     {Product.deliveryTime != null && (
                         <div className='Item Cargo'>
@@ -207,7 +208,23 @@ export default function ProductRight({ data }) {
                     )}
                     <div className="Item"><AiOutlineHeart></AiOutlineHeart> 123 {dictionary["Web.UI.ProductDetailFavoriteCalculate"]}</div>
                 </div>
+
+
+
+
+
+
             </div>
+
+            <div className="px py col-12" id="mobileContactSale">
+                <a href="#" className="mobileWhaBtn">
+                    {dictionary["@Web.UI.WhatsappToCart"] != null ? dictionary["@Web.UI.WhatsappToCart"] :"@Web.UI.WhatsappToCart"}
+                </a>
+                <a href="#" className="mobilePhoBtn">
+                    {dictionary["@Web.UI.PhoneToCart"] != null ? dictionary["@Web.UI.PhoneToCart"] :"@Web.UI.PhoneToCart"}
+                </a>
+            </div>
+
             <div className="fl col-12 productDetail">
                 <div className="fl col-12 Title">{dictionary["Web.UI.ProductDetailTitle"]}</div>
                 <div className="fl col-12 Content" dangerouslySetInnerHTML={{ __html: Product.primaryContent }}>

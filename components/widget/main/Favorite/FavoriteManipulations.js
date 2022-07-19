@@ -72,7 +72,7 @@ export default function FavoriteManipulations( {favProduct} ) {
 
   return (
 
-    <div>FavoriteManipulations</div>
+    <div></div>
 
   )
 }

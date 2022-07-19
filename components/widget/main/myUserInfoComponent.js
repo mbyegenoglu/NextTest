@@ -11,22 +11,23 @@ import * as Yup from 'yup';
 const validationSchema = Yup.object().shape({
     currentPassword: Yup.string().required('Bu alan boş bırakılamaz '),
     newPassword: Yup.string().required('Bu alan boş bırakılamaz').min(6, "Şifreniz 6 karakterden uzun olmalı, harf ve rakam içermelidir."),
-    newPassword2: Yup.string()
-        .oneOf([Yup.ref('newPassword'), null], 'Şifreler aynı olmalıdır.')
-
+    newPassword2: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Şifreler aynı olmalıdır.')
 });
 const validationSchemaUser = Yup.object().shape({
     name: Yup.string().required('Bu alan boş bırakılamaz '),
     surname: Yup.string().required('Bu alan boş bırakılamaz'),
     phone: Yup.string().required('Bu alan boş bırakılamaz'),
     email: Yup.string().required('Bu alan boş bırakılamaz')
-
 });
 
 export default function myUserInfoComponent() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [cUser, setUser] = useState({});
-
+    const [cUser, setUser] = useState({
+        name:"",
+        email:"",
+        phone:"",
+        surname:""
+    });
 
     const data = new FormData();
     const handleSubmit = async values => {
@@ -47,7 +48,7 @@ export default function myUserInfoComponent() {
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
     }
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     const formik = useFormik({
         initialValues: {
             currentPassword: '',
@@ -58,24 +59,22 @@ export default function myUserInfoComponent() {
         validationSchema: validationSchema,
         onSubmit: values => handleSubmit(values),
     });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     const formikUser = useFormik({
         initialValues: {
             name: '',
             surname: '',
             phone: '',
             email: ''
-
         },
         validationSchema: validationSchemaUser,
         onSubmit: values => handleSubmit(values),
     });
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const dictionary = useSelector(getDictionary);
     const req = null; const res = null;
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     useEffect(() => {
         GetUserInfo();
     }, []);
@@ -103,23 +102,27 @@ export default function myUserInfoComponent() {
         };
         fetch("https://auth.antremeta.com/user/getuserinfo", requestOptions)
             .then(response => response.json())
-            .then(result => { setUser(result.data) })
+            .then(result => {console.log(result.data) /*setUser()*/ })
             .catch(error => console.log('error', error));
     }
     const UpdateUserInfo = async values => {
-        var raw = JSON.stringify(values)
+
+        var raw = JSON.stringify(cUser)
         var requestOptions = {
             method: 'POST',
             headers: headerData,
             body: raw,
             redirect: 'follow'
         };
+   
         fetch("https://auth.antremeta.com/user/update", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
 
     }
+
+
 
     return (
         <div className="px py col-12" id="userDetail">
@@ -137,27 +140,27 @@ export default function myUserInfoComponent() {
                                                 <div className='fl col-12 miniTitle'>{dictionary["Web.UI.UserInfoMiniTitle"]}</div>
                                                 <div className='fl py col-12 form-group'>
                                                     <input type={"text"} name={'name'} value={cUser.name} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoName"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
 
                                                     <input type={"text"} name={'surname'} value={cUser.surname} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoSurname"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
 
-                                                    <input type={"text"} name={'mail'} value={cUser.email} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoMail"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    <input type={"text"} name={'email'} value={cUser.email} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoMail"]}></input>
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
 
                                                     <input type={"text"} name={'phone'} value={cUser.phone} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoPhone"] == undefined ? "Web.UI.UserInfoPhone" : dictionary["Web.UI.UserInfoPhone"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
 
                                                     <input type={"submit"} className="btn btn-primary" value={dictionary["Web.UI.UserInfoUpdateButton"] == undefined ? "Web.UI.UserInfoUpdateButton" : dictionary["Web.UI.UserInfoUpdateButton"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                             </form>
                                         </div>
@@ -166,15 +169,15 @@ export default function myUserInfoComponent() {
                                                 <div className='fl col-12 miniTitle'>{dictionary["Web.UI.UserInfoPasswordUpdate"]}</div>
                                                 <div className='fl py col-12 form-group'>
                                                     <input type={"password"} name="currentPassword" value={formik.values.currentPassword} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNowPassword"]}></input>
-                                                    {formik.errors.currentPassword ? <div>{formik.errors.currentPassword}</div> : null}
+                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
                                                     <input type={"password"} name="newPassword" value={formik.values.newPassword} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNewPassword"]}></input>
-                                                    {formik.errors.newPassword ? <div>{formik.errors.newPassword}</div> : null}
+                                                    {formik.errors.newPassword ? <div className="formik-Error">{formik.errors.newPassword}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
-                                                    <input type={"password"} name="newPassword2" value={formik.values.newPassword2} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNewPassword2"]}></input>
-                                                    {formik.errors.newPassword2 ? <div>{formik.errors.newPassword2}</div> : null}
+                                                    <input type={"password"} name="newPassword2" value={formik.values.newPassword2} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNewPassword2"] != null ? dictionary["Web.UI.UserInfoNewPassword2"] : "Web.UI.UserInfoNewPassword2"}></input>
+                                                    {formik.errors.newPassword2 ? <div className="formik-Error">{formik.errors.newPassword2}</div> : null}
                                                 </div>
                                                 <div className='fl col-12 form-group'>
                                                     <input type={"submit"} className="btn btn-primary" value={dictionary["Web.UI.PasswordUpdateButton"] == undefined ? "Web.UI.PasswordUpdateButton" : dictionary["Web.UI.PasswordUpdateButton"]}></input>

@@ -16,7 +16,7 @@ function Product(props) {
                                 <div className="Image">
                                     <div className="image-wrapper fl col-12">
                                         <span className="imgInner">
-                                            
+                                        <Image layout="fill" key={1} src={"https://img.antremeta.com/"+ product?.stockCode +"_1.jpg"} alt={product?.productName}></Image>
                                         </span>
                                     </div>
                                 </div>

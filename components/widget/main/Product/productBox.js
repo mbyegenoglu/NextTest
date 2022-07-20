@@ -101,17 +101,20 @@ export default function ProductBox({ item, param, dictionary }) {
                 </ul>
             </div>
 
-            <div className="fl col-12 productItemPrice">
-                {getOldPrice()}
-                <span className="currentPrice">{pItem?.salePrice} {pItem?.moneySymbol}</span>
-                <button className="productListFavBtn" onClick={(event) => addToFav(pItem?.refId)}><AiOutlineHeart></AiOutlineHeart></button>
-            </div>
-
-
             <div className="fl col-12 productItemInfo">
                 <span className="name">{pItem?.productBrandName}</span>
                 {pItem?.productName}
+                <button className="productListFavBtn" onClick={(event) => addToFav(pItem?.refId)}><AiOutlineHeart></AiOutlineHeart></button>
             </div>
+
+            <div className="fl col-12 productItemPrice">
+                {getOldPrice()}
+                <span className="currentPrice">{pItem?.salePrice} {pItem?.moneySymbol}</span>
+                
+            </div>
+
+
+
             
         </div>
     )

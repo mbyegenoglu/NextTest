@@ -64,7 +64,7 @@ footer #Top h3 + ul li a{display:flex;align-items:center;font-size:12px;color:#f
 footer #Top h3 + ul li a:hover{text-decoration:underline}
 footer #Bottom #Copyright{display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:500}
 footer #Middle .row{display:flex;align-items:flex-end}
-footer #Middle #Brand .Logo img{max-height: 30px;filter: invert(1);}
+footer #Middle #Brand .Logo img{max-height: 30px}
 footer #Middle #Brand ul{display:flex;align-items:center;justify-content:flex-start}
 footer #Middle #Brand ul li a{background:#212a2f;display:flex;align-items:center;justify-content:center;width:35px;height:35px;border-radius:100%;color:#fff;margin-right:10px;border:solid 1px #212a2f;transition:all .4s;font-size:25px}
 footer #Middle #Brand ul li a:hover{border-color:#fff;background:#fff}
@@ -564,7 +564,7 @@ header #Top #currLang > ul > li > ul > li:last-child{border:none}
 header #Top #currLang > ul > li > ul > li > a:hover{color:#1e2125;text-decoration:none;background-color:#e9ecef}
 
 #Provider {display: flex;align-items: center;justify-content: center;}
-#Provider img {max-width: 150px;filter: invert(1);}
+#Provider img {max-width: 150px;}
 #ProductListWidget #CatalogSubCategories .Item img {    max-width: 100px;max-height: 150px;width: auto;height: auto;}
 
 #TopCountdown {background: #201f1f;color: #fff;}

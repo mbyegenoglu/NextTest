@@ -56,7 +56,7 @@ export default function MyAddressComponent() {
     };
       
     function DeleteAddress(id){
-        fetch("https://auth.antremeta.com/CustomerAddress/Delete/" +id , requestDeleteOptions)
+        fetch("https://gw.antremeta.com/CustomerAddress/Delete/" +id , requestDeleteOptions)
         .then(response => response.text())
         .then(result => {
             console.log(result);
@@ -66,7 +66,7 @@ export default function MyAddressComponent() {
     }
 
     function GetAllAddress(){
-        fetch("https://auth.antremeta.com/CustomerAddress", requestGetAllOptions)
+        fetch("https://gw.antremeta.com/CustomerAddress", requestGetAllOptions)
         .then(response => response.json())
         .then(data => {
             setAddressList(data.data);
@@ -98,7 +98,7 @@ export default function MyAddressComponent() {
             };
 
             
-            fetch("https://auth.antremeta.com/CustomerAddress", requestOptions)
+            fetch("https://gw.antremeta.com/CustomerAddress", requestOptions)
             .then(response => response.text())
             .then(result => {
                 GetAllAddress();
@@ -120,7 +120,7 @@ export default function MyAddressComponent() {
             };
 
             
-            fetch("https://auth.antremeta.com/CustomerAddress/Update/"+currentAddress.id, requestOptions)
+            fetch("https://gw.antremeta.com/CustomerAddress/Update/"+currentAddress.id, requestOptions)
             .then(response => response.text())
             .then(result => {
                 GetAllAddress();

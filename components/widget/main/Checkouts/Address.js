@@ -62,7 +62,7 @@ function Address(props) {
     };
 
     function DeleteAddress(id) {
-        fetch("https://auth.antremeta.com/CustomerAddress/Delete/" + id, requestOptions)
+        fetch("https://gw.antremeta.com/CustomerAddress/Delete/" + id, requestOptions)
             .then(response => response.text())
             .then(result => {
                 console.log(result);
@@ -71,7 +71,7 @@ function Address(props) {
             .catch(error => console.log('error', error));
     }
     function GetAllAddress() {
-        fetch("https://auth.antremeta.com/CustomerAddress", requestOptions)
+        fetch("https://gw.antremeta.com/CustomerAddress", requestOptions)
             .then(response => response.json())
             .then(data => {
                 setAddressList(data.data);
@@ -102,7 +102,7 @@ function Address(props) {
             };
 
 
-            fetch("https://auth.antremeta.com/CustomerAddress", requestOptions)
+            fetch("https://gw.antremeta.com/CustomerAddress", requestOptions)
                 .then(response => response.text())
                 .then(result => {
                     GetAllAddress();
@@ -117,7 +117,7 @@ function Address(props) {
             var requestOptions = {method: 'POST',headers: headerData,body: raw,redirect: 'follow'};
 
 
-            fetch("https://auth.antremeta.com/CustomerAddress/Update/" + currentAddress.id, requestOptions)
+            fetch("https://gw.antremeta.com/CustomerAddress/Update/" + currentAddress.id, requestOptions)
                 .then(response => response.text())
                 .then(result => { GetAllAddress(); setIsOpen(false); })
                 .catch(error => console.log('error', error));

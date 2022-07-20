@@ -25,6 +25,8 @@ import {
     AiFillBoxPlot,
     AiOutlineTwitter
 } from "react-icons/ai";
+
+import {FiShoppingCart} from 'react-icons/fi'
 import MobileProductPrice from './mobileProductPrice';
 import FavoriteManipulations from '../Favorite/FavoriteManipulations';
 
@@ -194,7 +196,7 @@ export default function ProductRight({ data }) {
                 <div className="fl col-12 AddToCartSticky">
                     <MobileProductPrice price={sPrice}></MobileProductPrice>
                     <div className="fl col-7 cartSticky">
-                        <a href="#" onClick={e => addBasket()} className="AddToWp">{dictionary["Web.UI.AddToCart"]}</a>
+                        <a href="#" onClick={e => addBasket()} className="AddToWp">{dictionary["Web.UI.AddToCart"]} <FiShoppingCart></FiShoppingCart></a>
                     </div>
                 </div>
 

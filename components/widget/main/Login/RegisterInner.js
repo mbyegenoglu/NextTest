@@ -24,7 +24,7 @@ export default function RegisterInner({ authType, pageType }) {
         name: "",
         surname: "",
         username: "",
-        gender: 2,
+        gender: 0,
         phone: "",
         password: ""
     });

@@ -5,6 +5,7 @@ import { getDictionary } from '../../../redux/slices/dictionarySlice';
 import Cookiefactory from '../../../lib/cookiefactory';
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
+import moment from 'moment'
 
 
 
@@ -21,72 +22,12 @@ const validationSchemaUser = Yup.object().shape({
 });
 
 export default function MyUserInfoComponent() {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [cUser, setUser] = useState({
-        name:"",
-        email:"",
-        phone:"",
-        surname:""
-    });
-
-    const data = new FormData();
-    const handleSubmit = async values => {
-        Object.keys(values).forEach(key => {
-            data.append(key, values[key])
-
-        })
-        data.append("pass", values.currentPassword)
-        var requestOptions = {
-            method: 'POST',
-            headers: headerData,
-            body: data,
-            redirect: 'follow'
-        };
-
-        fetch("https://auth.antremeta.com/user/changepassword", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-    }
-
-    const formik = useFormik({
-        initialValues: {
-            currentPassword: '',
-            newPassword: '',
-            newPassword2: ''
-
-        },
-        validationSchema: validationSchema,
-        onSubmit: values => handleSubmit(values),
-    });
-
-    const formikUser = useFormik({
-        initialValues: {
-            name: '',
-            surname: '',
-            phone: '',
-            email: ''
-        },
-        validationSchema: validationSchemaUser,
-        onSubmit: values => handleSubmit(values),
-    });
-
     const dictionary = useSelector(getDictionary);
     const req = null; const res = null;
+    const [PasswordErr, setPasswordErr] = useState("");
+    const [InfoErr, setInfoErr] = useState("");
+    const [cUser, setUser] = useState({});
 
-
-    useEffect(() => {
-        GetUserInfo();
-    }, []);
-    const handleUserInput = (e) => {
-        const name = e.target.name
-        const value = e.target.value
-        setUser({ ...cUser, [name]: value });
-    }
-    const handleUserSubmit = (e) => {
-        UpdateUserInfo();
-        e.preventDefault();
-    }
     const cookiefactory = new Cookiefactory();
     const headerData = cookiefactory.GetCookies(req, res);
     const token = cookiefactory.GetToken(req, res);
@@ -100,13 +41,62 @@ export default function MyUserInfoComponent() {
             headers: headerData,
             redirect: 'follow'
         };
-        fetch("https://auth.antremeta.com/user/getuserinfo", requestOptions)
+        fetch("https://gw.antremeta.com/user/getuserinfo", requestOptions)
             .then(response => response.json())
-            .then(result => {console.log(result.data) /*setUser("asdjkbnsdogadsghfadsgfdas")*/ })
+            .then(result => { console.log(result.data); setUser(result.data) })
             .catch(error => console.log('error', error));
     }
-    const UpdateUserInfo = async values => {
 
+    useEffect(() => {
+        GetUserInfo();
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const data = new FormData();
+
+    const handleSubmit = async values => {
+        Object.keys(values).forEach(key => {
+            data.append(key, values[key])
+        })
+        data.append("pass", values.currentPassword)
+        var requestOptions = {
+            method: 'POST',
+            headers: headerData,
+            body: data,
+            redirect: 'follow'
+        };
+
+        fetch("https://gw.antremeta.com/user/changepassword", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                if (result != "") {
+                    var status = JSON.parse(result);
+                    if (!status.status) {
+                        setPasswordErr(status.errors);
+                    }
+                }
+                else {
+                    setPasswordErr("");
+                    alert("Şifre Başarıyla Güncellendi.");
+                }
+
+            })
+            .catch(error => console.log('error', error));
+    }
+
+    const handleUserSubmit = (e) => {
+        e.preventDefault();
         var raw = JSON.stringify(cUser)
         var requestOptions = {
             method: 'POST',
@@ -114,13 +104,49 @@ export default function MyUserInfoComponent() {
             body: raw,
             redirect: 'follow'
         };
-   
-        fetch("https://auth.antremeta.com/user/update", requestOptions)
+
+        console.log();
+
+        fetch("https://gw.antremeta.com/user/update", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-
     }
+
+
+
+
+    const formik = useFormik({
+        initialValues: {
+            currentPassword: '',
+            newPassword: '',
+            newPassword2: ''
+        },
+        validationSchema: validationSchema,
+        onSubmit: values => handleSubmit(values),
+    });
+
+    const formikUser = useFormik({
+        initialValues: {
+            name: '',
+            surname: '',
+            phone: '',
+            email: ''
+        },
+        validationSchema: validationSchemaUser,
+        onSubmit: values => handleUserSubmit(values),
+    });
+
+
+
+
+    const handleUserInput = (e) => {
+        const name = e.target.name
+        const value = e.target.value
+        setUser({ ...cUser, [name]: value });
+    }
+
+
 
 
 
@@ -138,35 +164,48 @@ export default function MyUserInfoComponent() {
                                         <div className='px py col-6 col-sm-12' id='AccountInfo'>
                                             <form action='' className='fl col-12 InfoInner' onSubmit={handleUserSubmit}>
                                                 <div className='fl col-12 miniTitle'>{dictionary["Web.UI.UserInfoMiniTitle"]}</div>
+
+                                                {InfoErr != "" && <div className="fl col-12 loginError">{InfoErr}</div>}
+
                                                 <div className='fl py col-12 form-group'>
                                                     <input type={"text"} name={'name'} value={cUser.name} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoName"]}></input>
-                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
+                                                    {formikUser.errors.name ? <div className="formik-Error">{formikUser.errors.name}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
-
                                                     <input type={"text"} name={'surname'} value={cUser.surname} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoSurname"]}></input>
-                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
+                                                    {formikUser.errors.surname ? <div className="formik-Error">{formikUser.errors.surname}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
-
                                                     <input type={"text"} name={'email'} value={cUser.email} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoMail"]}></input>
-                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
+                                                    {formikUser.errors.email ? <div className="formik-Error">{formikUser.errors.email}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
-
-                                                    <input type={"text"} name={'phone'} value={cUser.phone} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoPhone"] == undefined ? "Web.UI.UserInfoPhone" : dictionary["Web.UI.UserInfoPhone"]}></input>
-                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
+                                                    <input type={"text"} name={'phone'} value={cUser?.phone} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoPhone"] == undefined ? "Web.UI.UserInfoPhone" : dictionary["Web.UI.UserInfoPhone"]}></input>
+                                                    {formikUser.errors.phone ? <div className="formik-Error">{formikUser.errors.phone}</div> : null}
                                                 </div>
                                                 <div className='fl py col-12 form-group'>
+                                                    <input type={"date"} name={'birthdate'} value={cUser.birthdate == null ? moment().format('YYYY-MM-DD') : cUser.birthdate} onChange={handleUserInput} placeholder={dictionary["Web.UI.UserInfoBirthdate"] == undefined ? "Web.UI.UserInfoBirthdate" : dictionary["Web.UI.UserInfoBirthdate"]}></input>
+                                                </div>
+                                                <div className='fl py col-12 multi-select-group'>
+                                                    <ul className='fl col-12'>
+                                                        <li data-value={1}>Erkek</li>
+                                                        <li data-value={2}>Kadın</li>
+                                                    </ul>
+                                                </div>
 
+                                                <div className='fl py col-12 form-group'>
                                                     <input type={"submit"} className="btn btn-primary" value={dictionary["Web.UI.UserInfoUpdateButton"] == undefined ? "Web.UI.UserInfoUpdateButton" : dictionary["Web.UI.UserInfoUpdateButton"]}></input>
-                                                    {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
                                                 </div>
                                             </form>
                                         </div>
                                         <div className='px py col-6 col-sm-12' id='PasswordInfo'>
                                             <form action='' className='fl col-12 InfoInner' onSubmit={formik.handleSubmit}>
+
                                                 <div className='fl col-12 miniTitle'>{dictionary["Web.UI.UserInfoPasswordUpdate"]}</div>
+
+                                                {PasswordErr != "" && <div className="fl col-12 loginError">{PasswordErr}</div>}
+
+
                                                 <div className='fl py col-12 form-group'>
                                                     <input type={"password"} name="currentPassword" value={formik.values.currentPassword} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNowPassword"]}></input>
                                                     {formik.errors.currentPassword ? <div className="formik-Error">{formik.errors.currentPassword}</div> : null}
@@ -179,6 +218,9 @@ export default function MyUserInfoComponent() {
                                                     <input type={"password"} name="newPassword2" value={formik.values.newPassword2} onChange={formik.handleChange} placeholder={dictionary["Web.UI.UserInfoNewPassword2"] != null ? dictionary["Web.UI.UserInfoNewPassword2"] : "Web.UI.UserInfoNewPassword2"}></input>
                                                     {formik.errors.newPassword2 ? <div className="formik-Error">{formik.errors.newPassword2}</div> : null}
                                                 </div>
+
+
+
                                                 <div className='fl col-12 form-group'>
                                                     <input type={"submit"} className="btn btn-primary" value={dictionary["Web.UI.PasswordUpdateButton"] == undefined ? "Web.UI.PasswordUpdateButton" : dictionary["Web.UI.PasswordUpdateButton"]}></input>
                                                 </div>

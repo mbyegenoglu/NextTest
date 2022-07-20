@@ -46,7 +46,7 @@ export default function LoginInner({ authType , pageType}) {
         formd.append("Username", customerLogin.Username);
         formd.append("Password", customerLogin.Password);
 
-        let slug = "https://auth.antremeta.com" + '/Token/Get';
+        let slug = "https://gw.antremeta.com" + '/GetToken';
         const requestOptions = { method: 'POST', headers: headerData, body: formd };
 
         fetch(slug, requestOptions).then(response => response.json()).then(data => {

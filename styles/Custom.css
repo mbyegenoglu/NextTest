@@ -460,6 +460,8 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 .productOtherColor ul{display: block;white-space: nowrap;overflow-x: auto;width: calc(100% - 40px);height: 21px;overflow-y: hidden;}
 .productOtherColor ul::-webkit-scrollbar {height: 0px;}
 .productOtherColor ul li{width:20px;height:20px;border-radius:100%;background:#e8e9e9;margin-right:5px;cursor:pointer;border: solid 1px transparent;float: none; display: inline-block;}
+.productItem:not(.col-2-5) .productOtherColor ul li{width:25px;height:25px;}
+.productItem:not(.col-2-5) .productOtherColor ul{height: 26px;}
 .productOtherColor ul li.active{border: solid 1px #000;position: relative;}
 .productOtherColor ul li.active::after {width: 4px;height: 5px;background: #000000;content: '';display: flex;position: absolute;bottom: -2.5px;left: calc(50% - 2px);border-radius: 40px;}
 
@@ -498,7 +500,7 @@ a#whatsappFixed::after{animation-delay:.6s;animation-timing-function:ease-in}
 .ShowCase ul.slick-dots li button {width: 10px;height: 10px;border-radius: 100%;border: solid 1px #000;margin: 0 1.5px;}
 .ShowCase ul.slick-dots li.slick-active button {background: #000;}
 
-#CatalogSubCategories{display:block;overflow-x:auto;white-space:nowrap;padding-bottom:20px;padding-top:20px;text-align:center;}
+#CatalogSubCategories{display:block;overflow-x:auto;white-space:nowrap;padding-bottom:20px;padding-top:20px;text-align:left;}
 #CatalogSubCategories .Item{float:none;display:inline-block;margin-left:10px;position:relative;max-width: 100px;}
 #ProductListWidget #CatalogSubCategories .Item::after {width: 20px;height: 20px;content: '';display: flex;position: absolute;left: 5px;top: 5px;border-radius: 6px;border: solid 1px #e6e6e6;background: #fff;}
 #ProductListWidget #CatalogSubCategories .Item.active::After {background: red;}
@@ -892,7 +894,18 @@ body.GenderModalOpened{overflow:hidden}
     span.productTag {width: 30px;height: 30px;display: none;}
     #prodctRight {padding: 10px;}
     h1#productName {line-height: 1;font-size: 18px;margin: 8px 0;}
-    a.AddToWp {font-size: 13px;width: 100%;display: flex;background: #ff4200;}
+    a.AddToWp {
+      font-size: 13px;
+      width: 100%;
+      display: flex;
+      background: #ff4200;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .cartSticky{
+      width: 50%;
+    }
     .AddToCart button.addToCart {font-size: 13px;}
     #productComment #productCommentList .CommentItem .NameVerified span.Name {font-size: 9px;}
     #productComment #productCommentList .CommentItem .Comment {font-size: 11px;}
@@ -966,8 +979,11 @@ body.GenderModalOpened{overflow:hidden}
     .SubWrapper{margin:0;}
     .AddToCartSticky {position: fixed;left: 0;bottom: 0;background: #f9fafd;display: flex;align-items: center;z-index: 123;box-shadow: 0 -3px 3px rgb(0 0 0 / 10%);}
     #TopContact a {font-size: 11px;}
-    .AddToCartSticky .priceSticky {position: relative;padding: 0 0 0 50px;}
-
+    .AddToCartSticky .priceSticky {position: relative;padding: 0 0 0 50px;width: 50%;}
+    a.AddToWp svg {
+      height: 20px;
+      width: 20px;
+  }
     .AddToCartSticky .priceSticky .productDiscount {width: 40px;height: 40px;display: flex;align-items: center;justify-content: center;position: absolute;left: 3px;color: #f3f3f3;font-size: 14px;font-weight: 700;background: #ff4200!important;top: calc(50% - 20px);}
     .AddToCartSticky .priceSticky .oldPrice {text-decoration: line-through;font-size: 14px;font-weight: 600;color: #666;}
     .AddToCartSticky .priceSticky .currentPrice {font-size: 19px;font-weight: 800;color: #000000;line-height: 1;}
